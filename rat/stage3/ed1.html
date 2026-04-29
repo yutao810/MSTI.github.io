@@ -13,7 +13,7 @@
 
   <!-- 第一题 -->
   <div id="q1" class="space-y-4">
-    <p class="text-lg font-semibold text-center">你玩游戏更偏向？</p>
+    <p class="text-lg font-semibold text-center">测试题目</p>
     <button onclick="choose1(1)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
       选项1：稳救
     </button>
@@ -22,37 +22,39 @@
     </button>
   </div>
 
-  <!-- 第二题（默认隐藏）- 稳救分支 -->
+  <!-- 第二题（默认隐藏） -->
   <div id="q2" class="space-y-4 hidden">
-    <p class="text-lg font-semibold text-center">你更看重什么？</p>
+    <p class="text-lg font-semibold text-center">测试题目</p>
     <button onclick="goResult('尼宝')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项1：有牵制/上限高
+      选项1：有牵制/上限
     </button>
     <button onclick="goResult('剑客泰菲')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项2：有输出/下限高
+      选项2：有输出/下限
     </button>
   </div>
 </div>
 
 <script>
+  // 第一题选择
   function choose1(num) {
     if (num === 2) {
-      // 偏辅助 → 随机国王杰瑞或大表哥
-      const choice = Math.random() < 0.5 ? '国王杰瑞' : '大表哥';
-      location.href = `../../../result.html?role=${choice}`;
+      // 选偏辅助 → 直接国王杰瑞
+      location.href = "../../../result.html?role=国王杰瑞";
     } else {
-      // 稳救 → 显示第二题
+      // 选稳救 → 显示第二题
       document.getElementById("q1").classList.add("hidden");
       document.getElementById("q2").classList.remove("hidden");
     }
   }
 
+  // 跳转到最终结果页
   function goResult(role) {
-    location.href = `../../result.html?role=${role}`;
+    location.href = `../../../result.html?role=${role}`;
   }
 </script>
 
 <style>
+  /* 丝滑入场动画 */
   .animate-fade {
     animation: fade 0.5s ease forwards;
   }

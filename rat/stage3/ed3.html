@@ -13,23 +13,48 @@
 
   <!-- 第一题 -->
   <div id="q1" class="space-y-4">
-    <p class="text-lg font-semibold text-center">你玩游戏更偏向？</p>
-    <button onclick="goResult('侦探泰菲')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
+    <p class="text-lg font-semibold text-center">测试题目</p>
+    <button onclick="choose1(1)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
       选项1：纯推
     </button>
-    <button onclick="goResult('恶魔泰菲')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
+    <button onclick="choose1(2)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
       选项2：功能
+    </button>
+  </div>
+
+  <!-- 第二题（默认隐藏） -->
+  <div id="q2" class="space-y-4 hidden">
+    <p class="text-lg font-semibold text-center">测试题目</p>
+    <button onclick="goResult('侦探杰瑞')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
+      选项1：有辅助能力
+    </button>
+    <button onclick="goResult('侦探泰菲')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
+      选项2：独狼
     </button>
   </div>
 </div>
 
 <script>
+  // 第一题选择
+  function choose1(num) {
+    if (num === 2) {
+      // 选偏辅助 → 直接国王杰瑞
+      location.href = "../../../result.html?role=恶魔泰菲";
+    } else {
+      // 选稳救 → 显示第二题
+      document.getElementById("q1").classList.add("hidden");
+      document.getElementById("q2").classList.remove("hidden");
+    }
+  }
+
+  // 跳转到最终结果页
   function goResult(role) {
     location.href = `../../../result.html?role=${role}`;
   }
 </script>
 
 <style>
+  /* 丝滑入场动画 */
   .animate-fade {
     animation: fade 0.5s ease forwards;
   }

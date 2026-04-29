@@ -13,18 +13,18 @@
 
   <!-- 第一题 -->
   <div id="q1" class="space-y-4">
-    <p class="text-lg font-semibold text-center">你更喜欢哪种游戏方式？</p>
+    <p class="text-lg font-semibold text-center">测试题目</p>
     <button onclick="choose1(1)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项1：个人/爆发
+      选项1：个人
     </button>
     <button onclick="choose1(2)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项2：团队/全局
+      选项2：团队
     </button>
   </div>
 
-  <!-- 第二题（默认隐藏）- 个人/爆发分支 -->
+  <!-- 第二题（默认隐藏） -->
   <div id="q2" class="space-y-4 hidden">
-    <p class="text-lg font-semibold text-center">你更偏向？</p>
+    <p class="text-lg font-semibold text-center">测试题目</p>
     <button onclick="goResult('剑客莉莉')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
       选项1：偏输出
     </button>
@@ -35,23 +35,26 @@
 </div>
 
 <script>
+  // 第一题选择
   function choose1(num) {
-    if (num === 2) {
-      // 团队/全局 → 侦探杰瑞
-      location.href = `../../../result.html?role=侦探杰瑞`;
+    if (num === 1) {
+      // 选偏辅助 → 直接国王杰瑞
+      location.href = "../../../result.html?role=大表哥";
     } else {
-      // 个人/爆发 → 显示第二题
+      // 选稳救 → 显示第二题
       document.getElementById("q1").classList.add("hidden");
       document.getElementById("q2").classList.remove("hidden");
     }
   }
 
+  // 跳转到最终结果页
   function goResult(role) {
     location.href = `../../../result.html?role=${role}`;
   }
 </script>
 
 <style>
+  /* 丝滑入场动画 */
   .animate-fade {
     animation: fade 0.5s ease forwards;
   }

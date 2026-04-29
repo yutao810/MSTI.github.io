@@ -4,35 +4,56 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>最终角色确认</title>
-<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen p-4 flex items-center justify-center">
-
-<div class="max-w-md w-full bg-white rounded-2xl shadow-lg p-6 animate-fade">
-  <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">🐭 最终角色确认</h1>
-
-  <!-- 第一题 -->
-  <div id="q1" class="space-y-4">
-    <p class="text-lg font-semibold text-center">你更看重哪种能力？</p>
-    <button onclick="goResult('航海士杰瑞')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项1：守火箭
-    </button>
-    <button onclick="goResult('佩克斯')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项2：团队辅助
-    </button>
-    <button onclick="goResult('鲍姆')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项3：能救人
-    </button>
-  </div>
-</div>
-
-<script>
-  function goResult(role) {
-    location.href = `../../../result.html?role=${role}`;
-  }
-</script>
-
 <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .container {
+    max-width: 28rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  .question-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  .option {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  .option:hover {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+  }
   .animate-fade {
     animation: fade 0.5s ease forwards;
   }
@@ -41,5 +62,25 @@
     to { opacity: 1; transform: translateY(0); }
   }
 </style>
+</head>
+<body>
+
+<div class="container animate-fade">
+  <h1>🐭 最终角色确认</h1>
+
+  <div>
+    <p class="question-title">你更看重哪种能力？</p>
+    <button class="option" onclick="goResult('航海士杰瑞')">选项1：守火箭</button>
+    <button class="option" onclick="goResult('佩克斯')">选项2：团队辅助</button>
+    <button class="option" onclick="goResult('鲍姆')">选项3：能救人</button>
+  </div>
+</div>
+
+<script>
+  function goResult(role) {
+    location.href = `../../result.html?role=${role}`;
+  }
+</script>
+
 </body>
 </html>
