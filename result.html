@@ -4,50 +4,156 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>你的测试结果</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f3f4f6;
+      min-height: 100vh;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 28rem;
+      width: 100%;
+      background-color: white;
+      border-radius: 1rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    .header {
+      background: linear-gradient(to right, #2563eb, #9333ea);
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .header p {
+      font-size: 0.875rem;
+      opacity: 0.9;
+      margin-top: 0.25rem;
+    }
+
+    .image-container {
+      padding: 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .role-image {
+      width: 16rem;
+      height: 16rem;
+      object-fit: contain;
+      border-radius: 0.75rem;
+      border: 1px solid #e5e7eb;
+    }
+
+    .role-info {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      padding-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .role-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1f2937;
+      margin-bottom: 0.25rem;
+    }
+
+    .role-type {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #2563eb;
+      margin-bottom: 1rem;
+    }
+
+    .role-desc {
+      color: #4b5563;
+      font-size: 1rem;
+      line-height: 1.625;
+    }
+
+    .button-container {
+      padding: 1.5rem;
+      background-color: #f9fafb;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background-color: #2563eb;
+      color: white;
+      border-radius: 0.5rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.15s ease-in-out;
+    }
+
+    .btn:hover {
+      background-color: #1d4ed8;
+    }
+
+    .animate-fade {
+      animation: fade 0.6s ease forwards;
+    }
+
+    @keyframes fade {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 min-h-screen p-4 flex items-center justify-center">
+<body>
 
-<div class="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden animate-fade">
-  <!-- 结果头部 -->
-  <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 text-center">
-    <h1 class="text-2xl font-bold">🐭 猫鼠人格测试结果</h1>
-    <p class="text-sm opacity-90">测试完成！这是属于你的专属角色</p>
+<div class="container animate-fade">
+  <div class="header">
+    <h1>🐭 猫鼠人格测试结果</h1>
+    <p>测试完成！这是属于你的专属角色</p>
   </div>
 
-  <!-- 角色图片 -->
-  <div class="p-6 flex justify-center">
-    <img id="roleImg"
-         class="w-64 h-64 object-contain rounded-xl border border-gray-200"
-         src=""
-         alt="角色立绘">
+  <div class="image-container">
+    <img id="roleImg" class="role-image" src="" alt="角色立绘">
   </div>
 
-  <!-- 角色信息 -->
-  <div class="px-6 pb-6 text-center">
-    <h2 id="roleName" class="text-2xl font-bold text-gray-800 mb-1"></h2>
-    <p id="roleType" class="text-sm text-blue-600 font-medium mb-4"></p>
-    <p id="roleDesc" class="text-gray-600 text-base leading-relaxed"></p>
+  <div class="role-info">
+    <h2 id="roleName" class="role-name"></h2>
+    <p id="roleType" class="role-type"></p>
+    <p id="roleDesc" class="role-desc"></p>
   </div>
 
-  <!-- 重新测试 -->
-  <div class="p-6 bg-gray-50 text-center">
-    <button onclick="location.href='index.html'"
-            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+  <div class="button-container">
+    <button onclick="location.href='index.html'" class="btn">
       🔄 返回首页重新测试
     </button>
   </div>
 </div>
 
 <script>
-  // ==============================================
-  // 🎭 角色库（你只需要在这里维护角色）
-  // 格式："角色名": { img: "图片路径", type: "定位", desc: "描述" }
-  // ==============================================
   const roleData = {
-    // ==================== 老鼠阵营 ====================
-
-    // -------------------- 核心位：救援 --------------------
     "尼宝": {
       img: "images/尼宝.avif",
       type: "救援位 · 意识型",
@@ -83,8 +189,6 @@
       type: "救援位 · 操作型",
       desc: "冷静睿智擅长运营，主动追踪逃生一流，团队大脑意识流玩家代表"
     },
-
-    // -------------------- 核心位：奶酪 --------------------
     "侦探泰菲": {
       img: "images/侦探泰菲.avif",
       type: "奶酪位 · 意识型",
@@ -115,8 +219,6 @@
       type: "奶酪位 · 操作型",
       desc: "二段跳灵活如风，全图加速BUFF，是奶酪运输路上最靓的快递员"
     },
-
-    // -------------------- 功能位：牵制 --------------------
     "米可": {
       img: "images/米可.avif",
       type: "牵制位 · 意识型",
@@ -172,8 +274,6 @@
       type: "牵制位 · 操作型",
       desc: "虔诚的朝圣者，技能神秘效果独特，带给队友神秘的守护与增益"
     },
-
-    // -------------------- 功能位：综合 --------------------
     "天使泰菲": {
       img: "images/天使泰菲.avif",
       type: "功能位 · 综合型",
@@ -194,8 +294,6 @@
       type: "功能位 · 综合型",
       desc: "新兴角色机制独特，团队配合能力出众，协作中展现真正实力"
     },
-
-    // -------------------- 功能位：辅助 --------------------
     "天使杰瑞": {
       img: "images/天使杰瑞.avif",
       type: "辅助位 · 意识型",
@@ -231,8 +329,6 @@
       type: "辅助位 · 均衡型",
       desc: "魔镜通神一棒三变，传送技能灵活多变，战局的颠覆者与关键"
     },
-
-    // -------------------- 其他老鼠角色 --------------------
     "拿坡里鼠": {
       img: "images/拿坡里鼠.avif",
       type: "功能位 · 地形型",
@@ -263,8 +359,6 @@
       type: "老鼠 · 逗趣型",
       desc: "童年的好伙伴，大耳朵跑得快，幽默技能让猫咪头疼不已"
     },
-
-    // ==================== 猫咪阵营 ====================
     "汤姆": {
       img: "images/汤姆.avif",
       type: "猫咪 · 特攻型",
@@ -362,9 +456,6 @@
     }
   };
 
-  // ==============================================
-  // 自动读取参数并显示
-  // ==============================================
   const params = new URLSearchParams(location.search);
   const roleName = params.get("role") || "未知角色";
   const data = roleData[roleName] || {
@@ -373,22 +464,11 @@
     desc: "无法匹配到你的角色，请重新测试。"
   };
 
-  // 渲染到页面
   document.getElementById("roleName").innerText = data.name || roleName;
   document.getElementById("roleType").innerText = data.type;
   document.getElementById("roleDesc").innerText = data.desc;
   document.getElementById("roleImg").src = data.img;
 </script>
 
-<style>
-  /* 丝滑动画 */
-  .animate-fade {
-    animation: fade 0.6s ease forwards;
-  }
-  @keyframes fade {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-</style>
 </body>
 </html>
