@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最终角色确认</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex items-center justify-center">
+
+<div class="max-w-md w-full bg-white rounded-2xl shadow-lg p-6 animate-fade">
+  <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">🐭 最终角色确认</h1>
+
+  <!-- 第一题 -->
+  <div id="q1" class="space-y-4">
+    <p class="text-lg font-semibold text-center">你更看重哪种能力？</p>
+    <button onclick="goResult('航海士杰瑞')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
+      选项1：守火箭
+    </button>
+    <button onclick="goResult('佩克斯')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
+      选项2：团队辅助
+    </button>
+    <button onclick="goResult('鲍姆')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
+      选项3：能救人
+    </button>
+  </div>
+</div>
+
+<script>
+  function goResult(role) {
+    location.href = `../../../result.html?role=${role}`;
+  }
+</script>
+
+<style>
+  .animate-fade {
+    animation: fade 0.5s ease forwards;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</body>
+</html>

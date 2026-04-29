@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阶段二：核心位 · 角色划分</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4">
+
+<div class="max-w-xl mx-auto bg-white rounded-xl p-6 shadow">
+  <h1 class="text-2xl font-bold text-center mb-1">鼠问卷 · 阶段二</h1>
+  <p class="text-gray-500 text-center mb-6">核心位 · 角色划分</p>
+
+  <div class="text-right text-sm text-gray-500 mb-4">
+    阶段一得分：<span id="s1"></span> 分｜当前进度：<span id="progress">第 1 题 / 共5题</span>
+  </div>
+
+  <!-- 题目区域 -->
+  <div id="question" class="space-y-6">
+    <p class="text-lg font-semibold">测试题目 1</p>
+    <div class="text-sm text-gray-500 text-center mb-1">← 奶酪 ｜ 救援 →</div>
+    <div class="flex gap-2 score-group">
+      <button class="flex-1 border rounded py-3" onclick="pick(1)">1</button>
+      <button class="flex-1 border rounded py-3" onclick="pick(2)">2</button>
+      <button class="flex-1 border rounded py-3" onclick="pick(3)">3</button>
+      <button class="flex-1 border rounded py-3" onclick="pick(4)">4</button>
+      <button class="flex-1 border rounded py-3" onclick="pick(5)">5</button>
+    </div>
+  </div>
+
+  <!-- 按钮组 -->
+  <div class="mt-8 flex justify-between">
+    <button id="back" class="px-4 py-2 border rounded disabled:opacity-40">← 返回上一题</button>
+    <button id="submit" class="px-6 py-2 bg-green-600 text-white rounded hidden">提交确认</button>
+  </div>
+</div>
+
+<script>
+  // ==========================
+  // 配置（完全同阶段一）
+  // ==========================
+  const total = 5;
+  let current = 1;
+  let score = [0,0,0,0,0,0];
+  let selected = null;
+
+  // 接收阶段一分数
+  const urlParams = new URLSearchParams(location.search);
+  const stage1Total = urlParams.get('total') || 0;
+  document.getElementById('s1').innerText = stage1Total;
+
+  // 元素
+  const progress = document.getElementById("progress");
+  const title = document.querySelector("#question p");
+  const btns = document.querySelectorAll(".score-group button");
+  const back = document.getElementById("back");
+  const submit = document.getElementById("submit");
+
+  update();
+
+  // ==========================
+  // 选择分数 → 自动下一题
+  // ==========================
+  function pick(val) {
+    selected = val;
+    score[current] = val;
+
+    // 高亮
+    btns.forEach((b,i) => {
+      b.classList.toggle("bg-blue-500", i+1 === val);
+      b.classList.toggle("text-white", i+1 === val);
+    });
+
+    // 关键逻辑：1-4题自动下一题，第5题显示提交
+    setTimeout(() => {
+      if (current < 5) {
+        next();
+      } else {
+        submit.classList.remove("hidden");
+      }
+    }, 200);
+  }
+
+  // ==========================
+  // 下一题
+  // ==========================
+  function next() {
+    if (!selected) return;
+    current++;
+    selected = null;
+    update();
+  }
+
+  // ==========================
+  // 返回
+  // ==========================
+  back.onclick = () => {
+    if (current <= 1) return;
+    current--;
+    selected = score[current];
+    update();
+  };
+
+  // ==========================
+  // 提交 → 二分跳转
+  // ==========================
+  submit.onclick = () => {
+    const sum = score.slice(1,6).reduce((a,b)=>a+b, 0);
+    if (sum < 13) {
+      location.href = `../stage2/stage2_cheese.html?stage1=${stage1Total}&stage2=${sum}`;
+    } else {
+      location.href = `../stage2/stage2_rescue.html?stage1=${stage1Total}&stage2=${sum}`;
+    }
+  };
+
+  // ==========================
+  // 刷新界面
+  // ==========================
+  function update() {
+    title.textContent = `测试题目 ${current}`;
+    progress.textContent = `第 ${current} 题 / 共5题`;
+    back.disabled = current <= 1;
+    submit.classList.add("hidden");
+    btns.forEach(b => b.classList.remove("bg-blue-500","text-white"));
+
+    selected = score[current] || null;
+    if (selected) {
+      btns[selected-1].classList.add("bg-blue-500","text-white");
+      if (current == 5) submit.classList.remove("hidden");
+    }
+  }
+</script>
+</body>
+</html>
