@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>猫鼠人格测试</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6 text-center">
+  <div class="max-w-xl w-full bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4 tracking-tight">
+      猫鼠人格测试
+    </h1>
+    
+    <p class="text-lg text-gray-600 mb-8">
+      测一测你更像猫，还是更像鼠？
+    </p>
+
+    <div class="text-left text-gray-600 mb-10 bg-gray-50 p-6 rounded-xl text-sm leading-relaxed">
+      <p class="font-semibold mb-3 text-gray-800">测试说明：</p>
+      <ul class="list-disc list-inside space-y-2">
+        <li>请根据你的第一直觉作答</li>
+        <li>选择最符合你真实想法的选项</li>
+        <li>两套测试题目不同，结果独立</li>
+      </ul>
+    </div>
+
+    <!-- 两个按钮：猫问卷 + 鼠问卷 -->
+    <div class="flex flex-col sm:flex-row gap-4">
+      <button onclick="goCat()" class="flex-1 px-8 py-3 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+        🐱 猫问卷
+      </button>
+      <button onclick="goRat()" class="flex-1 px-8 py-3 font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 transition">
+        🐭 鼠问卷
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // 猫问卷跳转
+    function goCat() {
+      alert("即将进入 🐱 猫问卷测试");
+      // 以后你在这里写猫问卷页面地址
+      // window.location.href = "cat.html";
+    }
+
+    // 鼠问卷跳转
+    function goRat() {
+      alert("即将进入 🐭 鼠问卷测试");
+    window.location.href = "rat/rat.html";
+    }
+  </script>
+</body>
+</html>

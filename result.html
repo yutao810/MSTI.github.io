@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>你的测试结果</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 flex items-center justify-center">
+
+<div class="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden animate-fade">
+  <!-- 结果头部 -->
+  <div class="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 text-center">
+    <h1 class="text-2xl font-bold">🐭 猫鼠人格测试结果</h1>
+    <p class="text-sm opacity-90">测试完成！这是属于你的专属角色</p>
+  </div>
+
+  <!-- 角色图片 -->
+  <div class="p-6 flex justify-center">
+    <img id="roleImg"
+         class="w-64 h-64 object-contain rounded-xl border border-gray-200"
+         src=""
+         alt="角色立绘">
+  </div>
+
+  <!-- 角色信息 -->
+  <div class="px-6 pb-6 text-center">
+    <h2 id="roleName" class="text-2xl font-bold text-gray-800 mb-1"></h2>
+    <p id="roleType" class="text-sm text-blue-600 font-medium mb-4"></p>
+    <p id="roleDesc" class="text-gray-600 text-base leading-relaxed"></p>
+  </div>
+
+  <!-- 重新测试 -->
+  <div class="p-6 bg-gray-50 text-center">
+    <button onclick="location.href='index.html'"
+            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+      🔄 返回首页重新测试
+    </button>
+  </div>
+</div>
+
+<script>
+  // ==============================================
+  // 🎭 角色库（你只需要在这里维护角色）
+  // 格式："角色名": { img: "图片路径", type: "定位", desc: "描述" }
+  // ==============================================
+  const roleData = {
+    // ==================== 老鼠阵营 ====================
+
+    // -------------------- 核心位：救援 --------------------
+    "尼宝": {
+      img: "images/尼宝.avif",
+      type: "救援位 · 意识型",
+      desc: "低调的实力派，运筹帷幄之中，决胜千里之外，智者生存的典范"
+    },
+    "剑客泰菲": {
+      img: "images/剑客泰菲.avif",
+      type: "救援位 · 意识型",
+      desc: "救援型角色的翘楚，推奶酪守火箭有奇效，勇者的胆识体现在刃尖"
+    },
+    "国王杰瑞": {
+      img: "images/国王杰瑞.avif",
+      type: "救援位 · 辅助型",
+      desc: "天生的团队守护者，无敌护盾保护队友，救援能力首屈一指"
+    },
+    "大表哥": {
+      img: "images/大表哥.avif",
+      type: "救援位 · 辅助型",
+      desc: "可靠的队友后盾，救援防护一手抓，团队中不可或缺的存在"
+    },
+    "剑客莉莉": {
+      img: "images/剑客莉莉.avif",
+      type: "救援位 · 操作型",
+      desc: "御风剑舞形成结界，幻影剑气可穿梭位移，攻守兼备的女中豪杰"
+    },
+    "霜月": {
+      img: "images/霜月.avif",
+      type: "救援位 · 操作型",
+      desc: "滑步踢与草药精通，减速控制敌人有奇效，战场上的多面手"
+    },
+    "侦探杰瑞": {
+      img: "images/侦探杰瑞.avif",
+      type: "救援位 · 操作型",
+      desc: "冷静睿智擅长运营，主动追踪逃生一流，团队大脑意识流玩家代表"
+    },
+
+    // -------------------- 核心位：奶酪 --------------------
+    "侦探泰菲": {
+      img: "images/侦探泰菲.avif",
+      type: "奶酪位 · 意识型",
+      desc: "侦探杰瑞的完美搭档，运营辅助样样通，团队多面手不二人选"
+    },
+    "恶魔泰菲": {
+      img: "images/恶魔泰菲.avif",
+      type: "奶酪位 · 意识型",
+      desc: "复制放大物品的魔法师，墙缝期运输奶酪的绝对核心"
+    },
+    "杰瑞": {
+      img: "images/杰瑞.avif",
+      type: "奶酪位 · 均衡型",
+      desc: "经典主角，属性均衡易上手，武器多样辅助强，是新手入门的不二之选"
+    },
+    "梦游杰瑞": {
+      img: "images/梦游杰瑞.avif",
+      type: "奶酪位 · 操作型",
+      desc: "梦中出击伤害高，自动位移可解控，让猫咪在梦里也追不上"
+    },
+    "泰菲": {
+      img: "images/泰菲.avif",
+      type: "奶酪位 · 操作型",
+      desc: "娇小玲珑难以捕捉，火箭筒爆发伤害高，守火箭推奶酪都很拿手"
+    },
+    "罗宾汉杰瑞": {
+      img: "images/罗宾汉杰瑞.avif",
+      type: "奶酪位 · 操作型",
+      desc: "二段跳灵活如风，全图加速BUFF，是奶酪运输路上最靓的快递员"
+    },
+
+    // -------------------- 功能位：牵制 --------------------
+    "米可": {
+      img: "images/米可.avif",
+      type: "牵制位 · 意识型",
+      desc: "神秘角色能力独特，团队配合效果极佳，默默奉献的支援者"
+    },
+    "牛仔杰瑞": {
+      img: "images/牛仔杰瑞.avif",
+      type: "牵制位 · 意识型",
+      desc: "黔弓道具控制大师，守火箭拦猫咪，助战效果出色样样精通"
+    },
+    "魔术师": {
+      img: "images/魔术师.avif",
+      type: "牵制位 · 意识型",
+      desc: "神奇的魔法技能，控制与干扰并存，战场上的变戏法大师"
+    },
+    "航海士杰瑞": {
+      img: "images/航海士杰瑞.avif",
+      type: "牵制位 · 均衡型",
+      desc: "破坏火箭是他的拿手好戏，海上男儿航向哪里，胜利就指向哪里"
+    },
+    "佩克斯": {
+      img: "images/佩克斯.avif",
+      type: "牵制位 · 均衡型",
+      desc: "跳跃能力出众，机动性极强，猫咪难以捕捉的滑溜小老弟"
+    },
+    "鲍姆": {
+      img: "images/鲍姆.avif",
+      type: "牵制位 · 均衡型",
+      desc: "自爆狂魔危险与惊喜并存，锤子砸头眩晕随机，战场的变数之王"
+    },
+    "拿破仑鼠": {
+      img: "images/拿破仑鼠.avif",
+      type: "牵制位 · 操作型",
+      desc: "短腿却有大能量，单次控制精准，战场上的小个子大将军"
+    },
+    "蒙金奇": {
+      img: "images/蒙金奇.avif",
+      type: "牵制位 · 操作型",
+      desc: "军团指挥官率众冲锋，霸体推进击退一切，战场上的急先锋与领袖"
+    },
+    "剑客杰瑞": {
+      img: "images/剑客杰瑞.avif",
+      type: "牵制位 · 操作型",
+      desc: "暴力输出一刃斩破局，操作上限极高，是能带领队伍逆风翻盘的王牌"
+    },
+    "朵朵": {
+      img: "images/朵朵.avif",
+      type: "牵制位 · 操作型",
+      desc: "可爱迷人的小花仙，技能独特增益多样，特定模式下极为亮眼"
+    },
+    "朝圣者泰菲": {
+      img: "images/朝圣者泰菲.avif",
+      type: "牵制位 · 操作型",
+      desc: "虔诚的朝圣者，技能神秘效果独特，带给队友神秘的守护与增益"
+    },
+
+    // -------------------- 功能位：综合 --------------------
+    "天使泰菲": {
+      img: "images/天使泰菲.avif",
+      type: "功能位 · 综合型",
+      desc: "治疗与复活双重守护，团战中队友最坚实的后盾与依靠"
+    },
+    "罗宾汉泰菲": {
+      img: "images/罗宾汉泰菲.avif",
+      type: "功能位 · 综合型",
+      desc: "空中精灵二段跳，灵活穿梭战场，奶酪运输的加速器"
+    },
+    "柠檬杰瑞": {
+      img: "images/柠檬杰瑞.avif",
+      type: "功能位 · 综合型",
+      desc: "酸涩外表下的战斗专家，简单粗暴效率高，新手中的战斗高手"
+    },
+    "莱恩": {
+      img: "images/莱恩.avif",
+      type: "功能位 · 综合型",
+      desc: "新兴角色机制独特，团队配合能力出众，协作中展现真正实力"
+    },
+
+    // -------------------- 功能位：辅助 --------------------
+    "天使杰瑞": {
+      img: "images/天使杰瑞.avif",
+      type: "辅助位 · 意识型",
+      desc: "队友的守护天使，复活治疗一手抓，蓄力攻击守火箭样样在行"
+    },
+    "恶魔杰瑞": {
+      img: "images/恶魔杰瑞.avif",
+      type: "辅助位 · 意识型",
+      desc: "灵活狡滑的逃生专家，无敌效果多样，运奶酪救援面面俱到"
+    },
+    "玛丽": {
+      img: "images/玛丽.avif",
+      type: "辅助位 · 操作型",
+      desc: "温柔体贴的护盾专家，治疗与护盾兼备，团战生存能力出色"
+    },
+    "音乐家": {
+      img: "images/音乐家.avif",
+      type: "辅助位 · 操作型",
+      desc: "奏响胜利的乐章，队友增益全覆盖，功能性辅助的极致体现"
+    },
+    "雪梨": {
+      img: "images/雪梨.avif",
+      type: "辅助位 · 均衡型",
+      desc: "爱与治愈的化身，回血驱散于一体，团战增益能力出色"
+    },
+    "米雪儿": {
+      img: "images/米雪儿.avif",
+      type: "辅助位 · 均衡型",
+      desc: "优雅与实力并存，辅助技能全面，团队配合的润滑剂与核心"
+    },
+    "仙女鼠": {
+      img: "images/仙女鼠.avif",
+      type: "辅助位 · 均衡型",
+      desc: "魔镜通神一棒三变，传送技能灵活多变，战局的颠覆者与关键"
+    },
+
+    // -------------------- 其他老鼠角色 --------------------
+    "拿坡里鼠": {
+      img: "images/拿坡里鼠.avif",
+      type: "功能位 · 地形型",
+      desc: "意大利浪漫风味，技能多变适应地形，复杂环境中的穿梭专家"
+    },
+    "斯飞": {
+      img: "images/斯飞.avif",
+      type: "敏捷位 · 速度型",
+      desc: "风一般的女子，速度快如闪电，追击逃跑都是一把好手"
+    },
+    "表演者杰瑞": {
+      img: "images/表演者杰瑞.avif",
+      type: "功能位 · 增益型",
+      desc: "演艺事业达鼠，技能丰富多样，舞台上的绝对主角与焦点"
+    },
+    "马索尔": {
+      img: "images/马索尔.avif",
+      type: "防护位 · 辅助型",
+      desc: "来自远方的旅者，攻防兼备有特色，团队中独特的辅助力量"
+    },
+    "音乐家杰瑞": {
+      img: "images/音乐家杰瑞.avif",
+      type: "辅助位 · 乐团型",
+      desc: "奏响胜利的乐章，队友增益全覆盖，功能性辅助的极致体现"
+    },
+    "兔八哥": {
+      img: "images/兔八哥.avif",
+      type: "老鼠 · 逗趣型",
+      desc: "童年的好伙伴，大耳朵跑得快，幽默技能让猫咪头疼不已"
+    },
+
+    // ==================== 猫咪阵营 ====================
+    "汤姆": {
+      img: "images/汤姆.avif",
+      type: "猫咪 · 特攻型",
+      desc: "经典猫主角，发怒冲刺无敌加速，手型枪平底锅，入门必选"
+    },
+    "布奇": {
+      img: "images/布奇.avif",
+      type: "猫咪 · 爆发型",
+      desc: "暴力美学的典范，横冲直撞无视障碍，垃圾盖范围眩晕攻击力顶尖"
+    },
+    "托普斯": {
+      img: "images/托普斯.avif",
+      type: "猫咪 · 控制型",
+      desc: "双重猫格分裂攻击，泡泡困鼠捕虫网抓鼠，策略型猫咪的代表"
+    },
+    "莱特宁": {
+      img: "images/莱特宁.avif",
+      type: "猫咪 · 刺客型",
+      desc: "闪电瞬移天下武功唯快不破，垃圾桶减速致命，标记鼠无处逃逸"
+    },
+    "牛仔汤姆": {
+      img: "images/牛仔汤姆.avif",
+      type: "猫咪 · 持续输出型",
+      desc: "斗牛冲撞一网打尽，小皮鞭叠加眩晕，越战越勇的西部牛仔"
+    },
+    "图多盖洛": {
+      img: "images/图多盖洛.avif",
+      type: "猫咪 · 持续干扰型",
+      desc: "魅惑之吻永久削弱全属性，香水喷雾让鼠逃无可逃，颜值即正义"
+    },
+    "侍卫汤姆": {
+      img: "images/侍卫汤姆.avif",
+      type: "猫咪 · 刺客型",
+      desc: "隐身护盾的克星，火炮破盾追踪标记，被锁定就等于死亡宣判"
+    },
+    "图茨": {
+      img: "images/图茨.avif",
+      type: "猫咪 · 爆发型",
+      desc: "外表萌妹内心狂暴，高音攻击配合防狼锤，刺客潜质的爆发输出"
+    },
+    "塔拉": {
+      img: "images/塔拉.avif",
+      type: "猫咪 · 追击型",
+      desc: "西部玫瑰以智驭敌，魅力与实力并存，对男性角色有额外优势"
+    },
+    "毛毛发": {
+      img: "images/毛毛发.avif",
+      type: "猫咪 · 敏捷型",
+      desc: "机灵可爱的化身，身法灵活技能独特，追捕效率超乎想象"
+    },
+    "恶魔汤姆": {
+      img: "images/恶魔汤姆.avif",
+      type: "猫咪 · 黑暗型",
+      desc: "来自地狱的使者，技能凶猛伤害爆炸，黑暗力量的主宰与噩梦"
+    },
+    "天使汤姆": {
+      img: "images/天使汤姆.avif",
+      type: "猫咪 · 防御型",
+      desc: "万有引力吸道具环身，被攻有盾抵挡伤害，攻守兼备的圣者"
+    },
+    "剑客汤姆": {
+      img: "images/剑客汤姆.avif",
+      type: "猫咪 · 剑术型",
+      desc: "剑术精湛出剑如电，攻击范围大伤害高，鼠见鼠怕的剑道大师"
+    },
+    "追风汤姆": {
+      img: "images/追风汤姆.avif",
+      type: "猫咪 · 飞行型",
+      desc: "战术机动空中飞舞，俯冲击晕敌害，掌控天空的追风者"
+    },
+    "凯特": {
+      img: "images/凯特.avif",
+      type: "猫咪 · 攻击型",
+      desc: "学霸气质伤害成长高，被动增伤又加速，攻防两端都很优秀"
+    },
+    "苏蕊": {
+      img: "images/苏蕊.avif",
+      type: "猫咪 · 干扰型",
+      desc: "啦啦队长活力四射，律动时间回血免控，输出与生存兼备"
+    },
+    "米特": {
+      img: "images/米特.avif",
+      type: "猫咪 · 陷阱型",
+      desc: "疯狂锤子砸晕一切，陷阱设置封锁走位，隐身绕后一击必中"
+    },
+    "库博": {
+      img: "images/库博.avif",
+      type: "猫咪 · 隐身型",
+      desc: "虚幻梦影来去如风，隐身追杀防不胜防，老鼠最怕的潜行刺客"
+    },
+    "如玉": {
+      img: "images/如玉.avif",
+      type: "猫咪 · 特殊型",
+      desc: "气质高雅与众不同，技能效果别具一格，猫中君子的完美诠释"
+    }
+  };
+
+  // ==============================================
+  // 自动读取参数并显示
+  // ==============================================
+  const params = new URLSearchParams(location.search);
+  const roleName = params.get("role") || "未知角色";
+  const data = roleData[roleName] || {
+    img: "images/default.avif",
+    type: "未知定位",
+    desc: "无法匹配到你的角色，请重新测试。"
+  };
+
+  // 渲染到页面
+  document.getElementById("roleName").innerText = data.name || roleName;
+  document.getElementById("roleType").innerText = data.type;
+  document.getElementById("roleDesc").innerText = data.desc;
+  document.getElementById("roleImg").src = data.img;
+</script>
+
+<style>
+  /* 丝滑动画 */
+  .animate-fade {
+    animation: fade 0.6s ease forwards;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</body>
+</html>
