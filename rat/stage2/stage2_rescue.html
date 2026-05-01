@@ -9,17 +9,19 @@
 <body class="bg-gray-100 min-h-screen p-4">
 
 <div class="max-w-xl mx-auto bg-white rounded-xl p-6 shadow">
-  <h1 class="text-2xl font-bold text-center mb-1">鼠问卷 · 阶段二</h1>
-  <p class="text-gray-500 text-center mb-6">核心位 · 角色划分</p>
+  <h1 class="text-2xl font-bold text-center mb-1">鼠问卷 · 阶段三</h1>
+  <p class="text-gray-500 text-center mb-6">救援位 · 意识操作划分</p>
 
   <div class="text-right text-sm text-gray-500 mb-4">
-    阶段一得分：<span id="s1"></span> 分｜当前进度：<span id="progress">第 1 题 / 共5题</span>
+    阶段一：<span id="s1"></span> 分｜阶段二：<span id="s2"></span> 分｜进度：<span id="progress">第 1 题 / 共5题</span>
   </div>
 
   <!-- 题目区域 -->
   <div id="question" class="space-y-6">
-    <p class="text-lg font-semibold">测试题目 1</p>
-    <div class="text-sm text-gray-500 text-center mb-1">← 意识 ｜ 操作 →</div>
+    <p class="text-lg font-semibold" id="q-text">题目文本</p>
+    <div class="text-sm text-gray-500 text-center mb-1" id="labels">
+      <span id="left-label">左侧</span> ｜ <span id="mid-label">中间</span> ｜ <span id="right-label">右侧</span>
+    </div>
     <div class="flex gap-2 score-group">
       <button class="flex-1 border rounded py-3" onclick="pick(1)">1</button>
       <button class="flex-1 border rounded py-3" onclick="pick(2)">2</button>
@@ -37,44 +39,79 @@
 </div>
 
 <script>
-  // ==========================
-  // 配置（完全同阶段一）
-  // ==========================
+  const questions = [
+    {
+      text: "我在救援时更依赖角色自带的保护技能，靠技能本身的稳定性来保证救援成功率。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: true
+    },
+    {
+      text: "我在救援时更依赖通过控制技能或输出手段先压制猫，用操作打出空间后再从容救人",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    },
+    {
+      text: "我认为一次成功的救援，关键在于对时机的判断而非操作——什么时候去、从哪条路线接近、猫的技能是否在冷却。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: true
+    },
+    {
+      text: "比起角色本身有没有自保技能，我更看重角色的伤害和控制能力，因为我把猫打退本身就是最好的救援保障。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    },
+    {
+      text: "我更喜欢选择那些输出不低、能打能救的角色，虽然救援过程更依赖操作，但成功之后的成就感更强。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    }
+  ];
+
   const total = 5;
   let current = 1;
   let score = [0,0,0,0,0,0];
   let selected = null;
 
-  // 接收阶段一分数
   const urlParams = new URLSearchParams(location.search);
-  const stage1Total = urlParams.get('total') || 0;
-  document.getElementById('s1').innerText = stage1Total;
+  const stage1 = urlParams.get('stage1') || 0;
+  const stage2 = urlParams.get('stage2') || 0;
 
-  // 元素
+  document.getElementById('s1').innerText = stage1;
+  document.getElementById('s2').innerText = stage2;
+
   const progress = document.getElementById("progress");
-  const title = document.querySelector("#question p");
+  const qText = document.getElementById("q-text");
+  const leftLabel = document.getElementById("left-label");
+  const midLabel = document.getElementById("mid-label");
+  const rightLabel = document.getElementById("right-label");
   const btns = document.querySelectorAll(".score-group button");
   const back = document.getElementById("back");
   const submit = document.getElementById("submit");
 
   update();
 
-  // ==========================
-  // 选择分数 → 自动下一题
-  // ==========================
   function pick(val) {
     selected = val;
-    score[current] = val;
+    const q = questions[current - 1];
+    score[current] = q.reverse ? 6 - val : val;
 
-    // 高亮
     btns.forEach((b,i) => {
       b.classList.toggle("bg-blue-500", i+1 === val);
       b.classList.toggle("text-white", i+1 === val);
     });
 
-    // 关键逻辑：1-4题自动下一题，第5题显示提交
     setTimeout(() => {
-      if (current < 5) {
+      if (current < total) {
         next();
       } else {
         submit.classList.remove("hidden");
@@ -82,9 +119,6 @@
     }, 200);
   }
 
-  // ==========================
-  // 下一题
-  // ==========================
   function next() {
     if (!selected) return;
     current++;
@@ -92,42 +126,36 @@
     update();
   }
 
-  // ==========================
-  // 返回
-  // ==========================
   back.onclick = () => {
     if (current <= 1) return;
     current--;
-    selected = score[current];
+    selected = score[current] ? (questions[current - 1].reverse ? 6 - score[current] : score[current]) : null;
     update();
   };
 
-  // ==========================
-  // 提交 → 二分跳转
-  // ==========================
   submit.onclick = () => {
     const sum = score.slice(1,6).reduce((a,b)=>a+b, 0);
     if (sum < 13) {
-      location.href = `../stage3/ed1.html?stage1=${stage1Total}&stage2=${sum}`;
+      location.href = `../stage3/ed1.html?stage1=${stage1}&stage2=${stage2}`;
     } else {
-      location.href = `../stage3/ed2.html?stage1=${stage1Total}&stage2=${sum}`;
+      location.href = `../stage3/ed2.html?stage1=${stage1}&stage2=${stage2}`;
     }
   };
 
-  // ==========================
-  // 刷新界面
-  // ==========================
   function update() {
-    title.textContent = `测试题目 ${current}`;
-    progress.textContent = `第 ${current} 题 / 共5题`;
+    const q = questions[current - 1];
+    qText.textContent = q.text;
+    leftLabel.textContent = q.leftLabel;
+    midLabel.textContent = q.midLabel;
+    rightLabel.textContent = q.rightLabel;
+    progress.textContent = `第 ${current} 题 / 共${total}题`;
     back.disabled = current <= 1;
     submit.classList.add("hidden");
     btns.forEach(b => b.classList.remove("bg-blue-500","text-white"));
 
-    selected = score[current] || null;
     if (selected) {
       btns[selected-1].classList.add("bg-blue-500","text-white");
-      if (current == 5) submit.classList.remove("hidden");
+      if (current == total) submit.classList.remove("hidden");
     }
   }
 </script>

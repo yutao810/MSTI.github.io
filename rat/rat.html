@@ -12,12 +12,14 @@
   <h1 class="text-2xl font-bold text-center mb-1">鼠问卷 · 阶段一</h1>
   <p class="text-gray-500 text-center mb-6">定位划分</p>
 
-  <div class="text-right text-sm text-gray-500 mb-4" id="progress">第 1 题 / 共5题</div>
+  <div class="text-right text-sm text-gray-500 mb-4" id="progress">第 1 题 / 共6题</div>
 
   <!-- 题目区域 -->
   <div id="question" class="space-y-6">
-    <p class="text-lg font-semibold">测试题目 1</p>
-    <div class="text-sm text-gray-500 text-center mb-1">← 核心 ｜ 功能 →</div>
+    <p class="text-lg font-semibold" id="q-text">题目文本</p>
+    <div class="text-sm text-gray-500 text-center mb-1" id="labels">
+      <span id="left-label">左侧</span> ｜ <span id="mid-label">中间</span> ｜ <span id="right-label">右侧</span>
+    </div>
     <div class="flex gap-2 score-group">
       <button class="flex-1 border rounded py-3" onclick="pick(1)">1</button>
       <button class="flex-1 border rounded py-3" onclick="pick(2)">2</button>
@@ -35,39 +37,79 @@
 </div>
 
 <script>
-  // ==========================
-  // 配置
-  // ==========================
-  const total = 5;
+  const questions = [
+    {
+      text: "我更倾向于把精力放在完成阶段性目标上（推进或救援），而不是主动寻找与猫缠斗的机会。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: true
+    },
+    {
+      text: "我认为自己最大的价值体现在把该做的事做完、做好（推进或救人），而不是在操作上压制猫。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: true
+    },
+    {
+      text: "当猫盯上某个队友时，我的第一反应是去帮他摆脱困境，我会想方设法帮队友脱身，用道具或技能打断猫的追击节奏，而不是趁机去推奶酪。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    },
+    {
+      text: "我喜欢保持对战局节奏的掌控，倾向于通过牵制和骚扰来打乱猫的计划，为队友争取时间。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    },
+    {
+      text: "我认为自己的价值更多体现在让队友能安心做事，通过保障他们的安全来间接推动战局。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    },
+    {
+      text: "我更在意战局的整体进度是否顺利，因此会优先选择去补团队当前最缺的任务环节（推或救），而不是去管猫在哪儿。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: true
+    }
+  ];
+
+  const total = 6;
   let current = 1;
-  let score = [0,0,0,0,0,0];
+  let score = [0,0,0,0,0,0,0];
   let selected = null;
 
-  // 元素
   const progress = document.getElementById("progress");
-  const title = document.querySelector("#question p");
+  const qText = document.getElementById("q-text");
+  const leftLabel = document.getElementById("left-label");
+  const midLabel = document.getElementById("mid-label");
+  const rightLabel = document.getElementById("right-label");
   const btns = document.querySelectorAll(".score-group button");
   const back = document.getElementById("back");
   const submit = document.getElementById("submit");
 
   update();
 
-  // ==========================
-  // 选择分数 → 自动下一题
-  // ==========================
   function pick(val) {
     selected = val;
-    score[current] = val;
+    const q = questions[current - 1];
+    score[current] = q.reverse ? 6 - val : val;
 
-    // 高亮
     btns.forEach((b,i) => {
       b.classList.toggle("bg-blue-500", i+1 === val);
       b.classList.toggle("text-white", i+1 === val);
     });
 
-    // 1-4题自动跳，第五题显示提交
     setTimeout(() => {
-      if (current < 5) {
+      if (current < total) {
         next();
       } else {
         submit.classList.remove("hidden");
@@ -75,9 +117,6 @@
     }, 200);
   }
 
-  // ==========================
-  // 下一题
-  // ==========================
   function next() {
     if (!selected) return;
     current++;
@@ -85,39 +124,33 @@
     update();
   }
 
-  // ==========================
-  // 返回
-  // ==========================
   back.onclick = () => {
     if (current <= 1) return;
     current--;
-    selected = score[current];
+    selected = score[current] ? (questions[current - 1].reverse ? 6 - score[current] : score[current]) : null;
     update();
   };
 
-  // ==========================
-  // 提交 → 跳转
-  // ==========================
   submit.onclick = () => {
-    const sum = score.slice(1,6).reduce((a,b)=>a+b, 0);
+    const sum = score.slice(1,7).reduce((a,b)=>a+b, 0);
     if(sum < 13) location.href = `stage1/stage1_core.html?total=${sum}`;
     else location.href = `stage1/stage1_func.html?total=${sum}`;
   };
 
-  // ==========================
-  // 刷新界面
-  // ==========================
   function update() {
-    title.textContent = `测试题目 ${current}`;
-    progress.textContent = `第 ${current} 题 / 共5题`;
+    const q = questions[current - 1];
+    qText.textContent = q.text;
+    leftLabel.textContent = q.leftLabel;
+    midLabel.textContent = q.midLabel;
+    rightLabel.textContent = q.rightLabel;
+    progress.textContent = `第 ${current} 题 / 共${total}题`;
     back.disabled = current <= 1;
     submit.classList.add("hidden");
     btns.forEach(b => b.classList.remove("bg-blue-500","text-white"));
 
-    selected = score[current] || null;
     if (selected) {
       btns[selected-1].classList.add("bg-blue-500","text-white");
-      if (current == 5) submit.classList.remove("hidden");
+      if (current == total) submit.classList.remove("hidden");
     }
   }
 </script>

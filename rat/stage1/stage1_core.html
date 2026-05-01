@@ -18,8 +18,10 @@
 
   <!-- 题目区域 -->
   <div id="question" class="space-y-6">
-    <p class="text-lg font-semibold">测试题目 1</p>
-    <div class="text-sm text-gray-500 text-center mb-1">← 奶酪 ｜ 救援 →</div>
+    <p class="text-lg font-semibold" id="q-text">题目文本</p>
+    <div class="text-sm text-gray-500 text-center mb-1" id="labels">
+      <span id="left-label">左侧</span> ｜ <span id="mid-label">中间</span> ｜ <span id="right-label">右侧</span>
+    </div>
     <div class="flex gap-2 score-group">
       <button class="flex-1 border rounded py-3" onclick="pick(1)">1</button>
       <button class="flex-1 border rounded py-3" onclick="pick(2)">2</button>
@@ -37,44 +39,76 @@
 </div>
 
 <script>
-  // ==========================
-  // 配置（完全同阶段一）
-  // ==========================
+  const questions = [
+    {
+      text: "当队友发出求救信号时，我会立刻放下手头的奶酪，优先赶往救援。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: true
+    },
+    {
+      text: "我习惯时刻关注队友的状态，一旦有人倒地或被抓，我会觉得自己必须去救。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    },
+    {
+      text: "在阵容选择时，我更容易被拥有救援相关能力的角色所吸引。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    },
+    {
+      text: "在团队分工中，我更喜欢承担推进任务，把需要与猫正面对抗的救援工作留给队友。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: true
+    },
+    {
+      text: "即使明知有风险，当队友需要救援时，我仍然会觉得自己是最该去的那个人。",
+      leftLabel: "完全不符合",
+      midLabel: "",
+      rightLabel: "完全符合",
+      reverse: false
+    }
+  ];
+
   const total = 5;
   let current = 1;
   let score = [0,0,0,0,0,0];
   let selected = null;
 
-  // 接收阶段一分数
   const urlParams = new URLSearchParams(location.search);
   const stage1Total = urlParams.get('total') || 0;
   document.getElementById('s1').innerText = stage1Total;
 
-  // 元素
   const progress = document.getElementById("progress");
-  const title = document.querySelector("#question p");
+  const qText = document.getElementById("q-text");
+  const leftLabel = document.getElementById("left-label");
+  const midLabel = document.getElementById("mid-label");
+  const rightLabel = document.getElementById("right-label");
   const btns = document.querySelectorAll(".score-group button");
   const back = document.getElementById("back");
   const submit = document.getElementById("submit");
 
   update();
 
-  // ==========================
-  // 选择分数 → 自动下一题
-  // ==========================
   function pick(val) {
     selected = val;
-    score[current] = val;
+    const q = questions[current - 1];
+    score[current] = q.reverse ? 6 - val : val;
 
-    // 高亮
     btns.forEach((b,i) => {
       b.classList.toggle("bg-blue-500", i+1 === val);
       b.classList.toggle("text-white", i+1 === val);
     });
 
-    // 关键逻辑：1-4题自动下一题，第5题显示提交
     setTimeout(() => {
-      if (current < 5) {
+      if (current < total) {
         next();
       } else {
         submit.classList.remove("hidden");
@@ -82,9 +116,6 @@
     }, 200);
   }
 
-  // ==========================
-  // 下一题
-  // ==========================
   function next() {
     if (!selected) return;
     current++;
@@ -92,19 +123,13 @@
     update();
   }
 
-  // ==========================
-  // 返回
-  // ==========================
   back.onclick = () => {
     if (current <= 1) return;
     current--;
-    selected = score[current];
+    selected = score[current] ? (questions[current - 1].reverse ? 6 - score[current] : score[current]) : null;
     update();
   };
 
-  // ==========================
-  // 提交 → 二分跳转
-  // ==========================
   submit.onclick = () => {
     const sum = score.slice(1,6).reduce((a,b)=>a+b, 0);
     if (sum < 13) {
@@ -114,20 +139,20 @@
     }
   };
 
-  // ==========================
-  // 刷新界面
-  // ==========================
   function update() {
-    title.textContent = `测试题目 ${current}`;
-    progress.textContent = `第 ${current} 题 / 共5题`;
+    const q = questions[current - 1];
+    qText.textContent = q.text;
+    leftLabel.textContent = q.leftLabel;
+    midLabel.textContent = q.midLabel;
+    rightLabel.textContent = q.rightLabel;
+    progress.textContent = `第 ${current} 题 / 共${total}题`;
     back.disabled = current <= 1;
     submit.classList.add("hidden");
     btns.forEach(b => b.classList.remove("bg-blue-500","text-white"));
 
-    selected = score[current] || null;
     if (selected) {
       btns[selected-1].classList.add("bg-blue-500","text-white");
-      if (current == 5) submit.classList.remove("hidden");
+      if (current == total) submit.classList.remove("hidden");
     }
   }
 </script>
