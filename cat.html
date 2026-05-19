@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>猫问卷</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .container {
+    max-width: 32rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  .question { margin-bottom: 1rem; }
+  .question-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  .option {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  .option:hover {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+  }
+  .option.selected {
+    background-color: #dbeafe;
+    border-color: #3b82f6;
+  }
+  .next-btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease-in-out;
+    margin-top: 1rem;
+  }
+  .next-btn:hover:not(:disabled) {
+    background-color: #1d4ed8;
+  }
+  .next-btn:disabled {
+    background-color: #93c5fd;
+    cursor: not-allowed;
+  }
+  .hidden { display: none; }
+  .animate-fade {
+    animation: fade 0.5s ease forwards;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container animate-fade">
+  <h1>🐱 猫问卷</h1>
+
+  <!-- 第一题 -->
+  <div id="q1" class="question">
+    <p class="question-title">在不讨论鼠方阵容的前提下，以下哪个选项最符合您对猫角色的偏好？</p>
+    <button class="option" data-option="A" onclick="selectOption(1, 'A')">A. 我喜欢可以与老鼠死战不退、具备持续作战和防守能力的坚韧型角色。</button>
+    <button class="option" data-option="B" onclick="selectOption(1, 'B')">B. 相比角色强度，我更看重技能的流畅性、操作的爽快感与角色本身的魅力。</button>
+    <button class="option" data-option="C" onclick="selectOption(1, 'C')">C. 我喜欢前期隐忍发育、通过技能与状态积累在后期接管比赛的成长型角色。</button>
+    <button class="option" data-option="D" onclick="selectOption(1, 'D')">D. 我喜欢不怕干扰类老鼠的游龙角色，能够在控制环境中保持行动自由。</button>
+    <button class="option" data-option="E" onclick="selectOption(1, 'E')">E. 我喜欢视野开阔、追击能力强、可以远程攻击老鼠的全图压制型角色。</button>
+    <button id="next1" class="next-btn" disabled onclick="goQ2()">下一题</button>
+  </div>
+
+  <!-- 第二题A -->
+  <div id="q2A" class="question hidden">
+    <p class="question-title">在持续作战与防守风格中，您更倾向于哪种战斗节奏？</p>
+    <button class="option" data-option="A" onclick="selectOption(2, 'A')">A. 我喜欢打阵地战，擅长划定并固守一片优势区域，让对手在我的主场难以施展。</button>
+    <button class="option" data-option="B" onclick="selectOption(2, 'B')">B. 我喜欢在近身缠斗中逐步削弱对手，通过持续消耗与反制手段来积累优势。</button>
+    <button class="option" data-option="C" onclick="selectOption(2, 'C')">C. 我喜欢使用分身或多线操作的方式布防，通过多点控场来限制对手的活动空间。</button>
+    <button class="option" data-option="D" onclick="selectOption(2, 'D')">D. 我喜欢在追击中根据战局变化获得成长，集视野获取与持续回复于一身。</button>
+    <button class="option" data-option="E" onclick="selectOption(2, 'E')">E. 我喜欢高伤害、高爆发的冲阵打法，追求快速接近目标并瞬间击倒。</button>
+    <button id="next2A" class="next-btn" disabled onclick="goResultA()">查看结果</button>
+  </div>
+
+  <!-- 第二题B -->
+  <div id="q2B" class="question hidden">
+    <p class="question-title">在追求操作流畅与技能爽快的前提下，您更偏好哪种战斗方式？</p>
+    <button class="option" data-option="A" onclick="selectOption(2, 'A')">A. 我喜欢多段位移和连招追击的高机动打法，能够先手命中后持续跟进，出击便能打出压制效果。</button>
+    <button class="option" data-option="B" onclick="selectOption(2, 'B')">B. 我喜欢正面硬碰硬的格挡型打法，能够防御或反弹来自对手的干扰，打得不慌不忙。</button>
+    <button class="option" data-option="C" onclick="selectOption(2, 'C')">C. 我喜欢以高速奔跑和免疫控制为核心的游走打法，利用移动速度优势保持追击与拉扯。</button>
+    <button id="next2B" class="next-btn" disabled onclick="goResultB()">查看结果</button>
+  </div>
+
+  <!-- 第二题C -->
+  <div id="q2C" class="question hidden">
+    <p class="question-title">在讲究发育与后期爆发的成长型角色中，您更偏好哪种战斗方式？</p>
+    <button class="option" data-option="A" onclick="selectOption(2, 'A')">A. 我喜欢越战越勇的坦克型打法，能在承受伤害的过程中积蓄力量，防守时对手极难突破。</button>
+    <button class="option" data-option="B" onclick="selectOption(2, 'B')">B. 我喜欢利用特殊位移穿行地图的猎手型打法，擅长标记目标后持续追踪并借此强化自身。</button>
+    <button class="option" data-option="C" onclick="selectOption(2, 'C')">C. 我喜欢通过连续控制叠加来限制对手的打法，前期看似平淡，但一旦连招成型对手便难以脱身。</button>
+    <button class="option" data-option="D" onclick="selectOption(2, 'D')">D. 我喜欢依靠范围性威慑和暗中发育的打法，悄无声息地积累优势，再以范围爆发结束战斗。</button>
+    <button id="next2C" class="next-btn" disabled onclick="goResultC()">查看结果</button>
+  </div>
+
+  <!-- 第二题D -->
+  <div id="q2D" class="question hidden">
+    <p class="question-title">在应对鼠方干扰的前提下，您更偏好哪种对战方式？</p>
+    <button class="option" data-option="A" onclick="selectOption(2, 'A')">A. 我喜欢通过分析对手弱点来积累战术优势的打法，能逐步放大对特定目标的伤害。</button>
+    <button class="option" data-option="B" onclick="selectOption(2, 'B')">B. 我喜欢节奏鲜明、强制对手跟随我步调的打法，身处我的节奏中便能化解诸多控制。</button>
+    <button class="option" data-option="C" onclick="selectOption(2, 'C')">C. 我喜欢利用对手异常状态进行协同打击的打法，擅长配合控制效果打出定点爆发。</button>
+    <button id="next2D" class="next-btn" disabled onclick="goResultD()">查看结果</button>
+  </div>
+
+  <!-- 第二题E -->
+  <div id="q2E" class="question hidden">
+    <p class="question-title">在追求大视野与强追击的前提下，您更倾向于哪种战斗风格？</p>
+    <button class="option" data-option="A" onclick="selectOption(2, 'A')">A. 我喜欢能够主动飞跃地形、无视障碍物的超高机动打法，习惯在空中完成追击与终结，让对手无处可逃。</button>
+    <button class="option" data-option="B" onclick="selectOption(2, 'B')">B. 我偏爱利用速度爆发迅速接近目标的风格，通过高频移动和快速打击让对手难以拉开距离。</button>
+    <button class="option" data-option="C" onclick="selectOption(2, 'C')">C. 我更看重对战局的全局掌控，喜欢通过获取视野和灵活转移来预判并封锁对手的移动路线。</button>
+    <button class="option" data-option="D" onclick="selectOption(2, 'D')">D. 我喜欢以远程火力压制对手的风格，善于在远距离揭露敌方位置并削弱其能力，再从容展开追击。</button>
+    <button class="option" data-option="E" onclick="selectOption(2, 'E')">E. 我喜欢灵活飘逸的空中作战风格，能在飞行中进行俯冲打击或携带队友转移，以机动性换取战术优势。</button>
+    <button id="next2E" class="next-btn" disabled onclick="goResultE()">查看结果</button>
+  </div>
+</div>
+
+<script>
+  let q1Option = '';
+  let q2Option = '';
+
+  function selectOption(qNum, option) {
+    if (qNum === 1) {
+      q1Option = option;
+      // 清除第一题所有选项的选中状态
+      const options = document.querySelectorAll('#q1 .option');
+      options.forEach(opt => opt.classList.remove('selected'));
+      // 选中当前选项
+      document.querySelector(`#q1 .option[data-option="${option}"]`).classList.add('selected');
+      // 启用下一题按钮
+      document.getElementById('next1').disabled = false;
+    } else if (qNum === 2) {
+      q2Option = option;
+      // 清除当前第二题所有选项的选中状态
+      const container = document.getElementById(`q2${q1Option}`);
+      const options = container.querySelectorAll('.option');
+      options.forEach(opt => opt.classList.remove('selected'));
+      // 选中当前选项
+      container.querySelector(`.option[data-option="${option}"]`).classList.add('selected');
+      // 启用查看结果按钮
+      document.getElementById(`next2${q1Option}`).disabled = false;
+    }
+  }
+
+  function goQ2() {
+    document.getElementById('q1').classList.add('hidden');
+    document.getElementById(`q2${q1Option}`).classList.remove('hidden');
+  }
+
+  function goResultA() {
+    const map = {'A':'stage4/41_TDL.html','B':'stage4/54_RY.html','C':'stage4/38_TPS.html','D':'stage4/44_TL.html','E':'stage4/37_BC.html'};
+    location.href = map[q2Option];
+  }
+  function goResultB() {
+    const map = {'A':'stage4/48_JK_Tom.html','B':'stage4/36_TM.html','C':'stage4/45_SF.html'};
+    location.href = map[q2Option];
+  }
+  function goResultC() {
+    const map = {'A':'stage4/52_MT.html','B':'stage4/35_TBG.html','C':'stage4/40_NZ_Tom.html','D':'stage4/43_TZ.html'};
+    location.href = map[q2Option];
+  }
+  function goResultD() {
+    const map = {'A':'stage4/50_KT.html','B':'stage4/51_SR.html','C':'stage4/46_EM_Tom.html'};
+    location.href = map[q2Option];
+  }
+  function goResultE() {
+    const map = {'A':'stage4/47_TS_Tom.html','B':'stage4/39_LTN.html','C':'stage4/53_KB.html','D':'stage4/42_SW_Tom.html','E':'stage4/49_ZF_Tom.html'};
+    location.href = map[q2Option];
+  }
+</script>
+
+</body>
+</html>
