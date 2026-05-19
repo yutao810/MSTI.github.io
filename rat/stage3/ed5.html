@@ -72,27 +72,25 @@
 
   <div id="q1" class="question">
     <p class="question-title">你玩游戏更偏向？</p>
-    <button class="option" onclick="goResult('梦游杰瑞')">选项1：推得快</button>
-    <button class="option" onclick="choose1(2)">选项2：能博弈</button>
+    <button class="option" onclick="choose1(1)">选项1：纯推</button>
+    <button class="option" onclick="choose1(2)">选项2：功能</button>
   </div>
 
   <div id="q2" class="question hidden">
-    <p class="question-title">你更喜欢哪种风格？</p>
-    <button class="option" onclick="goResult('泰菲')">选项1：硬进流</button>
-    <button class="option" onclick="goResult('罗宾汉杰瑞')">选项2：自卫流</button>
+    <p class="question-title">你的风格是？</p>
+    <button class="option" onclick="location.href='../stage4/7_ZT_JR.html'">选项1：有辅助能力</button>
+    <button class="option" onclick="location.href='../stage4/8_ZT_TF.html'">选项2：独狼</button>
   </div>
 </div>
 
 <script>
   function choose1(num) {
     if (num === 2) {
+      location.href = '../stage4/9_EM_TF.html';
+    } else {
       document.getElementById("q1").classList.add("hidden");
       document.getElementById("q2").classList.remove("hidden");
     }
-  }
-
-  function goResult(role) {
-    location.href = `../../result.html?role=${role}`;
   }
 </script>
 

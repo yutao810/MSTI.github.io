@@ -78,15 +78,15 @@
 
   <div id="q2" class="question hidden">
     <p class="question-title">你更喜欢哪种控制方式？</p>
-    <button class="option" onclick="goResult('拿破仑鼠')">选项1：单次控制</button>
-    <button class="option" onclick="goResult('蒙金奇')">选项2：持续输出</button>
+    <button class="option" onclick="location.href='../stage4/34_NPL_S.html'">选项1：单次控制</button>
+    <button class="option" onclick="location.href='../stage4/19_MJQ.html'">选项2：持续输出</button>
   </div>
 
   <div id="q3" class="question hidden">
     <p class="question-title">你更喜欢哪种输出方式？</p>
-    <button class="option" onclick="goResult('剑客杰瑞')">选项1：近身</button>
-    <button class="option" onclick="goResult('朵朵')">选项2：中程</button>
-    <button class="option" onclick="goResult('朝圣者泰菲')">选项3：暗杀</button>
+    <button class="option" onclick="location.href='../stage4/20_JK_JR.html'">选项1：近身</button>
+    <button class="option" onclick="location.href='../stage4/21_DD.html'">选项2：中程</button>
+    <button class="option" onclick="location.href='../stage4/22_CST_TF.html'">选项3：暗杀</button>
   </div>
 </div>
 
@@ -99,10 +99,6 @@
       document.getElementById("q1").classList.add("hidden");
       document.getElementById("q3").classList.remove("hidden");
     }
-  }
-
-  function goResult(role) {
-    location.href = `../../result.html?role=${role}`;
   }
 </script>
 

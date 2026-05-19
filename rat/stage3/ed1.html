@@ -86,17 +86,15 @@
 <script>
   function choose1(num) {
     if (num === 2) {
-      // 偏辅助 → 国王杰瑞
-      location.href = `../../result.html?role=国王杰瑞`;
+      location.href = `../stage4/3_GW_JR.html`;
     } else {
-      // 稳救 → 显示第二题
       document.getElementById("q1").classList.add("hidden");
       document.getElementById("q2").classList.remove("hidden");
     }
   }
 
   function goResult(role) {
-    location.href = `../../result.html?role=${role}`;
+    location.href = `../stage4/2_JK_TF.html`;
   }
 </script>
 

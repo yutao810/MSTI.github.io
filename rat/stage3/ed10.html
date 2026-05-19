@@ -4,87 +4,58 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>最终角色确认</title>
-<script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 min-h-screen p-4 flex items-center justify-center">
-
-<div class="max-w-md w-full bg-white rounded-2xl shadow-lg p-6 animate-fade">
-  <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">🐭 最终角色确认</h1>
-
-  <!-- 第一题 -->
-  <div id="q1" class="space-y-4">
-    <p class="text-lg font-semibold text-center">你的游戏风格更偏向？</p>
-    <button onclick="choose1(1)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项1：意识
-    </button>
-    <button onclick="choose1(2)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项2：操作
-    </button>
-    <button onclick="choose1(3)" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项3：均衡
-    </button>
-  </div>
-
-  <!-- 第二题（默认隐藏）- 意识分支 -->
-  <div id="q2" class="space-y-4 hidden">
-    <p class="text-lg font-semibold text-center">你更看重？</p>
-    <button onclick="goResult('天使杰瑞')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项1：下限
-    </button>
-    <button onclick="goResult('恶魔杰瑞')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项2：上限
-    </button>
-  </div>
-
-  <!-- 第三题（默认隐藏）- 操作分支 -->
-  <div id="q3" class="space-y-4 hidden">
-    <p class="text-lg font-semibold text-center">你更喜欢？</p>
-    <button onclick="goResult('玛丽')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项1：团队
-    </button>
-    <button onclick="goResult('音乐家杰瑞')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项2：单走
-    </button>
-  </div>
-
-  <!-- 第四题（默认隐藏）- 均衡分支 -->
-  <div id="q4" class="space-y-4 hidden">
-    <p class="text-lg font-semibold text-center">你更偏向？</p>
-    <button onclick="goResult('雪梨')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项1：上限
-    </button>
-    <button onclick="goResult('米雪儿')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项2：下限
-    </button>
-    <button onclick="goResult('仙女鼠')" class="w-full p-4 border border-gray-200 rounded-xl hover:bg-blue-50 transition text-left">
-      选项3：全面
-    </button>
-  </div>
-</div>
-
-<script>
-  function choose1(num) {
-    if (num === 1) {
-      // 意识 → 显示第二题
-      document.getElementById("q1").classList.add("hidden");
-      document.getElementById("q2").classList.remove("hidden");
-    } else if (num === 2) {
-      // 操作 → 显示第三题
-      document.getElementById("q1").classList.add("hidden");
-      document.getElementById("q3").classList.remove("hidden");
-    } else {
-      // 均衡 → 显示第四题
-      document.getElementById("q1").classList.add("hidden");
-      document.getElementById("q4").classList.remove("hidden");
-    }
-  }
-
-  function goResult(role) {
-    location.href = `../../result.html?role=${role}`;
-  }
-</script>
-
 <style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .container {
+    max-width: 28rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  .question { margin-bottom: 1rem; }
+  .question-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  .option {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: white;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  .option:hover {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+  }
+  .hidden { display: none; }
   .animate-fade {
     animation: fade 0.5s ease forwards;
   }
@@ -93,5 +64,53 @@
     to { opacity: 1; transform: translateY(0); }
   }
 </style>
+</head>
+<body>
+
+<div class="container animate-fade">
+  <h1>🐭 最终角色确认</h1>
+
+  <div id="q1" class="question">
+    <p class="question-title">你的游戏风格更偏向？</p>
+    <button class="option" onclick="choose1(1)">选项1：意识</button>
+    <button class="option" onclick="choose1(2)">选项2：操作</button>
+    <button class="option" onclick="choose1(3)">选项3：均衡</button>
+  </div>
+
+  <div id="q2" class="question hidden">
+    <p class="question-title">你更看重？</p>
+    <button class="option" onclick="location.href='../stage4/27_TS_JR.html'">选项1：下限</button>
+    <button class="option" onclick="location.href='../stage4/28_EM_JR.html'">选项2：上限</button>
+  </div>
+
+  <div id="q3" class="question hidden">
+    <p class="question-title">你更喜欢？</p>
+    <button class="option" onclick="location.href='../stage4/29_ML.html'">选项1：团队</button>
+    <button class="option" onclick="location.href='../stage4/30_YYJ_JR.html'">选项2：单走</button>
+  </div>
+
+  <div id="q4" class="question hidden">
+    <p class="question-title">你更偏向？</p>
+    <button class="option" onclick="location.href='../stage4/31_XL.html'">选项1：上限</button>
+    <button class="option" onclick="location.href='../stage4/32_MXE.html'">选项2：下限</button>
+    <button class="option" onclick="location.href='../stage4/33_XNS.html'">选项3：全面</button>
+  </div>
+</div>
+
+<script>
+  function choose1(num) {
+    if (num === 1) {
+      document.getElementById("q1").classList.add("hidden");
+      document.getElementById("q2").classList.remove("hidden");
+    } else if (num === 2) {
+      document.getElementById("q1").classList.add("hidden");
+      document.getElementById("q3").classList.remove("hidden");
+    } else {
+      document.getElementById("q1").classList.add("hidden");
+      document.getElementById("q4").classList.remove("hidden");
+    }
+  }
+</script>
+
 </body>
 </html>

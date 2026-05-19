@@ -30,7 +30,6 @@
     color: #1f2937;
     margin-bottom: 1.5rem;
   }
-  .question { margin-bottom: 1rem; }
   .question-title {
     font-size: 1.125rem;
     font-weight: 600;
@@ -55,7 +54,6 @@
     background-color: #eff6ff;
     border-color: #bfdbfe;
   }
-  .hidden { display: none; }
   .animate-fade {
     animation: fade 0.5s ease forwards;
   }
@@ -70,29 +68,15 @@
 <div class="container animate-fade">
   <h1>🐭 最终角色确认</h1>
 
-  <div id="q1" class="question">
-    <p class="question-title">你玩游戏更偏向？</p>
-    <button class="option" onclick="goResult('梦游杰瑞')">选项1：推得快</button>
-    <button class="option" onclick="choose1(2)">选项2：能博弈</button>
-  </div>
-
-  <div id="q2" class="question hidden">
-    <p class="question-title">你更喜欢哪种风格？</p>
-    <button class="option" onclick="location.href='../stage4/11_TF.html'">选项1：硬进流</button>
-    <button class="option" onclick="location.href='../stage4/12_LBH_JR.html'">选项2：自卫流</button>
+  <div>
+    <p class="question-title">还记得猫鼠游戏的起点吗</p>
+    <button class="option" onclick="goResult('如玉')">他的名字是......</button>
   </div>
 </div>
 
 <script>
-  function choose1(num) {
-    if (num === 2) {
-      document.getElementById("q1").classList.add("hidden");
-      document.getElementById("q2").classList.remove("hidden");
-    }
-  }
-
   function goResult(role) {
-    location.href = `../stage4/10_MY_JR.html`;
+    location.href = `../../result.html?role=${role}`;
   }
 </script>
 
