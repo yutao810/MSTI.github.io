@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>最终角色确认</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background-color: #f3f4f6;
+    min-height: 100vh;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .container {
+    max-width: 28rem;
+    width: 100%;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+  }
+  .question-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: #374151;
+  }
+  .option {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    background: white;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+  }
+  .option:hover {
+    background-color: #eff6ff;
+    border-color: #bfdbfe;
+  }
+  .animate-fade {
+    animation: fade 0.5s ease forwards;
+  }
+  @keyframes fade {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container animate-fade">
+  <h1>最终角色确认</h1>
+  <div>
+    <p class="question-title" id="question"></p>
+    <button class="option" onclick="goResult()">他的名字是......</button>
+  </div>
+</div>
+
+<script>
+  const roleData = {
+    "杰瑞": [
+      {"question": "江南采莲，莲叶何田田，鱼戏莲叶间", "skin": "鱼戏莲"},
+      {"question": "畅想未来，梦想总能到达彼岸", "skin": "畅想未来"},
+      {"question": "吾乃齐天大圣孙悟空！谁敢与我一战！", "skin": "大圣"},
+      {"question": "乾坤无限，龙腾万里，至尊帝王，独步天下！", "skin": "龙腾天下"},
+      {"question": "小小的乞丐老鼠换上了王子的装束，他是如此高贵优雅、英勇无畏......就如同一个真正的王子！", "skin": "乞丐王子"},
+      {"question": "月高风黑夜，来自忘川的使者开启了他的尘世之旅", "skin": "跳跳使者"},
+      {"question": "花开富贵，瑞气盈门，新的一年开门接好运啦~", "skin": "花开富贵"},
+      {"question": "在梦中樱花盛放的时刻，我回到了你的身旁", "skin": "浪漫樱花"},
+      {"question": "在有限的生命中探索无限的自然", "skin": "探险家"}
+    ],
+    "汤姆": [
+      {"question": "第欧根尼通过老鼠的启发形成了"犬儒主义"的思想，而他在抓捕老鼠的过程中，创造出新的理论——"猫儒主义"", "skin": "猫儒主义"},
+      {"question": "锦衣狐裘，诸侯之服也", "skin": "锦衣行"},
+      {"question": "生活的幽默随时让你跌个跟头，但站起来就能继续奔跑", "skin": "竹报平安"},
+      {"question": "鄙姓杨,单名戬,家住灌江口", "skin": "二郎神"},
+      {"question": "江南可采莲,莲叶何田田,鱼戏莲叶间", "skin": "鱼戏莲"},
+      {"question": "在梦中樱花盛放的时刻，我回到了你的身旁", "skin": "浪漫樱花"},
+      {"question": "无限的未知与神秘可都等着他去探索呢!", "skin": "星海队长"},
+      {"question": "谁才是这条街上最闪耀的那颗星", "skin": "街头之星"},
+      {"question": "拯救宇宙的英雄也要有放假的时间，休息一下啦~", "skin": "队长休憩中"},
+      {"question": "有那么一类人,天生就是被人仰望的", "skin": "天王巨星"}
+    ],
+    "侦探杰瑞": [
+      {"question": "性别曲直.见人斗,触不直者.闻人争,咋不正者", "skin": "獬月梦探"},
+      {"question": "对于这些灵异事件，他总能用科学的方法解释", "skin": "调查处专员"},
+      {"question": "他来去如风,拥有过人才智,是一位充满传奇色彩的超级警长", "skin": "神探警长"},
+      {"question": "遨游浩瀚星海,我将创造新的历史", "skin": "星际统帅"},
+      {"question": "游走在光明和黑暗之间的幽冥星探,用自己的方式守护公平和正义", "skin": "幽灵星探"},
+      {"question": "负责调查超自然现象的神秘探员J,他守卫着现实与神秘之间唯一的屏障", "skin": "神秘探员"},
+      {"question": "一切都有迹可循,虚拟世界也有记忆", "skin": "寻踪高手"},
+      {"question": "跟随我，和我来一场美丽的时光之旅吧", "skin": "时光旅行者"}
+    ],
+    "罗宾汉杰瑞": [
+      {"question": "夏天夏天悄悄过去,留下许多小秘密......", "skin": "粉红回忆"},
+      {"question": "萦绕在黑暗之森的歌声,仿佛海妖,诱惑着来来往往的冒险者", "skin": "黑夜之歌"},
+      {"question": "祥云瑞气，晓日和风，太平佳兆", "skin": "祥云"},
+      {"question": "精灵王爷拥有世上最飘逸的秀发，就是这么自信", "skin": "精灵王爷"},
+      {"question": "他是城市的守护者，将一切危险消灭于摇篮之中", "skin": "炽焰忍者"},
+      {"question": "被黑夜掩盖的正义之光，就让我来点亮", "skin": "假面掠影"},
+      {"question": "没有人能形容他飞驰时的速度，他的速度超乎所有人的想象", "skin": "疾风迅影"},
+      {"question": "甜粽子和咸粽子哪个最好吃？这是一个值得商榷的问题", "skin": "甜粽飘香"},
+      {"question": "在原始丛林中，寻找被隐藏的过往", "skin": "雨林探险"},
+      {"question": "武林江湖的逍遥游侠，行侠仗义，独自闯荡江湖", "skin": "江湖游侠"},
+      {"question": "他是穿梭星际的游侠，他与太空对话，他同宇宙共鸣", "skin": "星际游侠"}
+    ],
+    "航海士杰瑞": [
+      {"question": "他是西班牙公认的航海王，富可敌国", "skin": "皇家航海士"},
+      {"question": "乘风破浪潮头立，扬帆起航正当时", "skin": "大西洋舵手"},
+      {"question": "他是海上最拉风的小霸王，他的名号无人不知无人不晓", "skin": "海上小霸王"},
+      {"question": "乘风破浪，无人可挡！换揣着梦想的少年们啊，跟我一起去征服海洋吧！", "skin": "海洋领主"},
+      {"question": "梦境之海的绝对主宰，他的航船啃噬良善之人的噩梦，带走凶恶之徒的美梦", "skin": "噩梦船长"},
+      {"question": "富可敌国的宝藏，尽在我手中！", "skin": "宝藏之主"},
+      {"question": "他摇撼着大海与那之上的大地，掌控着漩涡与深渊，令礁石战栗，令潮汐俯首", "skin": "潮汐主宰"},
+      {"question": "请将你的忠诚交给我", "skin": "风暴上将"},
+      {"question": "苍黄日日冒黄尘，敢意诚通主雨神", "skin": "雨师"}
+    ],
+    "国王杰瑞": [
+      {"question": "王座的巅峰，权力的舞台", "skin": "郁金香王座"},
+      {"question": "年轻的君王，请上位吧", "skin": "一国之君"},
+      {"question": "愿你们的荣耀之光，犹如闪电照亮四方，愿你们的进攻呐喊，犹如雷鸣东西回荡！", "skin": "帝国征服者"},
+      {"question": "在玩具的世界里，我就是王", "skin": "黑桃国王"},
+      {"question": "冰雪也要臣服在我的脚下！", "skin": "至高王座"},
+      {"question": "汗水织就梦想，踏着音符的台阶，通向星光无限的舞台", "skin": "无限星光"},
+      {"question": "唯独凡尔赛宫的大门，是一把他永远也无法打开的锁", "skin": "凡尔赛之锁"},
+      {"question": "在我看见你的第一眼时，我想，或许你是我这一生中最重要的人", "skin": "一见钟情"},
+      {"question": "人间梦隔西风，算天上，年华一瞬", "skin": "鹊桥相会"},
+      {"question": "爱元宵三五风光，月色婵娟，灯火辉煌。月满冰轮，灯烧陆海，人踏阳春", "skin": "冰雪圆子"}
+    ],
+    "剑客杰瑞": [
+      {"question": "剑客的意志用不动摇", "skin": "剑客意志"},
+      {"question": "鲜衣怒马，仗剑天涯", "skin": "白衣剑少"},
+      {"question": "翳彩纷繁影，纸上舞动万年华", "skin": "纷影裁华"},
+      {"question": "剑术神通，无拘无束，行之所至，无招胜有招！", "skin": "孤独剑尊"},
+      {"question": "无惧刀光剑影，他是英勇无畏的战神！", "skin": "无冕战神"},
+      {"question": "血色黄昏下，守卫血族女王身边的最后一道防线，月光将周身的花瓣染成至红至暗的绯色，缓缓飘落", "skin": "绯红之花"},
+      {"question": "在炽热中舞蹈，他是希望的化身", "skin": "炎之剑士"},
+      {"question": "金风玉露一相逢，便胜却人间无数", "skin": "鹊桥仙"},
+      {"question": "御剑飞行天外去，青霄直上玉京台", "skin": "御剑"},
+      {"question": "东君未老芳菲赴，剑挑喧风，袖卷桃雨，笠影春始处", "skin": "桃花剑"}
+    ],
+    "布奇": [
+      {"question": "大金链子小绿表，一身毛皮大衣的他是最拉风的土豪", "skin": "民间土豪"},
+      {"question": "在战争中成长，战胜敌人更要战胜自己！", "skin": "战魂"},
+      {"question": "美丽的女士，请收下这朵玫瑰花吧", "skin": "霸道总裁"},
+      {"question": "醒狮呈福瑞，高歌太平年", "skin": "常胜之狮"},
+      {"question": "和我的医术相比，科学只是微不足道的一部分，你说对么，凯特小姐", "skin": "科学怪医"},
+      {"question": "面具之下，是歌剧院百年未散的幽魂，在烛火摇曳中，他唱起曾经的旋律", "skin": "歌剧幽影"}
+    ],
+    "托普斯": [
+      {"question": "千门万户曈曈日，总把新桃换旧符", "skin": "书新禧"},
+      {"question": "咚次哒次~咚次哒次~伴随着欢快的音乐，引领摩登潮流的托普斯向你走来！", "skin": "摩登时代"},
+      {"question": "除恶令行不泣弱，守法正心不畏强", "skin": "狴犴正气"},
+      {"question": "有时候，眼睛也是会骗人的哟~", "skin": "幻术师"},
+      {"question": "宰相哲，上佐天子，下遂万物之宜，内亲附百姓，使卿大夫各得任其职", "skin": "大宰相"},
+      {"question": "听说，拥有这件皮肤的同学，考试从来不挂科，顺利获得毕业证", "skin": "不挂科师兄"}
+    ],
+    "泰菲": [
+      {"question": "下雨天，小可爱和小熊最配", "skin": "熊宝大冒险"},
+      {"question": "每当夜幕降临，梦境之主骑着云鲸穿梭在不同的梦境中，消灭噩梦，给人们带去美梦", "skin": "同心筑梦"},
+      {"question": "来和人家一起吃蛋糕吗？", "skin": "萌系女仆"},
+      {"question": "在浩瀚的星海中，寻找你我的梦想", "skin": "星海之梦"},
+      {"question": "传说午夜12点的游乐园，会发生奇妙故事哟~", "skin": "游园奇幻夜"}
+    ],
+    "莱特宁": [
+      {"question": "只要速度快,烦恼就追不上我", "skin": "闪电车王"}
+    ],
+    "剑客泰菲": [
+      {"question": "在白昼与黑夜交错的刹那，他的剑光宛若流星", "skin": "暗夜战神"},
+      {"question": "追求剑道的路，永无止境！", "skin": "剑道大师"},
+      {"question": "不知细叶谁裁出，二月春风似剪刀", "skin": "剪春风"},
+      {"question": "银鞍照白马，白袍小将的风姿是战场上最耀眼的光", "skin": "白袍小将"},
+      {"question": "剑圣的剑意充满勇气、智慧、仁爱、大义......后世称其为"圣道"", "skin": "剑圣"},
+      {"question": "不到最后一刻，比赛就没有结束", "skin": "联赛冠军"},
+      {"question": "剑随心意动，剑气破云霄", "skin": "樱花小剑士"},
+      {"question": "勇气和信念铸就这一把独一无二的勇气之剑", "skin": "勇气之剑"},
+      {"question": "我命由我不由天！", "skin": "哪吒"},
+      {"question": "黄昏若是逢魔时刻，那么黎明之前的安宁由我来守护！", "skin": "猎魔人"}
+    ],
+    "牛仔杰瑞": [
+      {"question": "处变不惊，优雅从容，是一名皇家爵士的基本素养", "skin": "皇家爵士鼠"}
+    ],
+    "牛仔汤姆": [
+      {"question": "维多利亚时期孤独的发明家，天才又怪异", "skin": "大发明家"}
+    ],
+    "恶魔杰瑞": [
+      {"question": "当你凝视着深渊时，深渊也在凝视着你", "skin": "深渊之主"}
+    ],
+    "恶魔泰菲": [
+      {"question": "森林里的花又开了，外婆一定很喜欢", "skin": "小红帽"}
+    ],
+    "雪梨": [
+      {"question": "以魔法的名义命令你，封印解除！", "skin": "魔法少女"}
+    ],
+    "图多盖洛": [
+      {"question": "北方有佳人，绝世而独立", "skin": "绝代佳人"}
+    ],
+    "侍卫汤姆": [
+      {"question": "夜幕下穿梭的身影，守护着城市的安宁", "skin": "城市猎人"}
+    ],
+    "天使杰瑞": [
+      {"question": "他代神明传递旨意，慈悲与仁爱自神官的笔下传扬。当圣洁的双翅展翼，世间万物皆沐浴于这光辉之中", "skin": "宫廷神官"}
+    ],
+    "天使泰菲": [
+      {"question": "让我为你，照亮整片星空", "skin": "星月传奇"}
+    ],
+    "图茨": [
+      {"question": "披上美丽的嫁衣，我将会收获幸福", "skin": "花的嫁衣"}
+    ],
+    "米特": [
+      {"question": "前进！向着最终目的地进发！", "skin": "蒸汽机动队"}
+    ],
+    "魔术师": [
+      {"question": "对王牌特工而言，没有不可能完成的任务", "skin": "王牌特工"}
+    ],
+    "佩克斯": [
+      {"question": "子有酒食，何不日鼓瑟？且以喜乐，且以永日", "skin": "喜乐颂"}
+    ],
+    "拿坡里鼠": [
+      {"question": "让所有快乐的鲜花都盛开在音乐之上！快和我一起来玩游戏吧！", "skin": "电玩梦想"}
+    ],
+    "侦探泰菲": [
+      {"question": "时间的齿轮不停旋转，我们相遇在美丽的时空尽头", "skin": "时之约定"}
+    ],
+    "塔拉": [
+      {"question": "勇敢的心，是你最强大的武器！", "skin": "蔷薇女爵"}
+    ],
+    "剑客莉莉": [
+      {"question": "一叶花瓣，一丛荆棘，怒放的玫瑰永不凋零", "skin": "暗夜玫瑰"}
+    ],
+    "剑客汤姆": [
+      {"question": "保护弱小和无助的人，为所有人的幸福而战斗", "skin": "骑士精神"}
+    ],
+    "罗宾汉泰菲": [
+      {"question": "在命运的刀尖上起舞！", "skin": "夜影忍者"}
+    ],
+    "玛丽": [
+      {"question": "欲戴王冠，必承其重", "skin": "红桃皇后"}
+    ],
+    "库博": [
+      {"question": "遵循自然的法则，即便是智者也不能妄言", "skin": "自然之灵"}
+    ],
+    "大表哥": [
+      {"question": "机械之力，成就超凡！强大的战意，无人可挡！", "skin": "机械战神"}
+    ],
+    "米雪儿": [
+      {"question": "她歌唱自己的抉择，自己的道路，自己的命运，她即为自己的拯救者", "skin": "歌剧新娘"}
+    ],
+    "凯特": [
+      {"question": "爱是一个浅浅的微笑。做你的守护神，做你的避风港", "skin": "爱与守护"}
+    ],
+    "音乐家杰瑞": [
+      {"question": "想参加星海之上的传奇音乐会么？那就来奶酪星探险吧！", "skin": "星海乐章"}
+    ],
+    "蒙金奇": [
+      {"question": "飞越银河系，我是最伟大的银河舰长！", "skin": "银河舰长"}
+    ],
+    "尼宝": [
+      {"question": "纵享高空的华丽飞影，在回旋的钢丝舞步中上演今夜的刺激美梦！", "skin": "绮梦飞影"}
+    ],
+    "苏蕊": [
+      {"question": "在化作晨光中的最后一抹泡沫前......让我再为你跳一支舞吧......", "skin": ""}
+    ],
+    "朵朵": [
+      {"question": "禁锢于坚瓷之中，她的歌声将于凡尔赛宫永存", "skin": "凡尔赛之歌"}
+    ],
+    "仙女鼠": [
+      {"question": "玉妃夜宴瑶池冷，翩然飞下霓生影", "skin": "瑶池仙子"}
+    ],
+    "天使汤姆": [
+      {"question": "带着光明和爱，他从云端缓缓走来", "skin": "光明使者"}
+    ],
+    "米可": [
+      {"question": "日落江湖白，潮来天地青", "skin": "龙太子"}
+    ],
+    "斯飞": [
+      {"question": "白虎之魂，永不褪灭！", "skin": "神虎令"}
+    ],
+    "霜月": [
+      {"question": "雀翎芳华，盛世如昨", "skin": "雀翎传说"}
+    ],
+    "恶魔汤姆": [
+      {"question": "实验成功带来的绝妙滋味，是任何一种世俗享受都代替不了的", "skin": "神秘博士"}
+    ],
+    "兔八哥": [
+      {"question": "没人知道他接下来要干什么，即便是他自己", "skin": "编号3.1/2"}
+    ],
+    "表演者杰瑞": [
+      {"question": "这可不是什么风车，这是我要去战胜的四手巨人——"堂吉诃德"", "skin": ""}
+    ],
+    "追风汤姆": [
+      {"question": "藏身古堡的阴暗反派？不不不，伯爵的伟大计划远超任何人的想象！", "skin": "奶酪伯爵"}
+    ],
+    "莱恩": [
+      {"question": "落笔成真的梦来到他的身旁", "skin": "神笔马良"}
+    ],
+    "梦游杰瑞": [
+      {"question": "长袍曳过星月，蝴蝶点缀琉璃，传说坠落指尖，属于他的那场梦永不覆灭", "skin": "梦中之国"}
+    ],
+    "如玉": [
+      {"question": "她跳起这天与地间的一支舞，于是雨水应声落下，连接天地，龙腾云起", "skin": "青龙令"}
+    ],
+    "鲍姆": [
+      {"question": "结果的坍缩依赖于观察", "skin": "科学怪鼠"}
+    ],
+    "朝圣者泰菲": [
+      {"question": "威风凛凛的小号手，紧张又充满期待地为自己的第一次游行演出准备着！", "skin": "小号手"}
+    ]
+  };
+
+  const params = new URLSearchParams(location.search);
+  const role = params.get("role") || "未知角色";
+  
+  let questions = roleData[role];
+  if (!questions) {
+    questions = [{"question": "还记得猫鼠游戏的起点吗", "skin": "经典"}];
+  }
+  
+  const randomIndex = Math.floor(Math.random() * questions.length);
+  const selectedQuestion = questions[randomIndex];
+  
+  document.getElementById("question").innerText = selectedQuestion.question;
+
+  function goResult() {
+    const encodedRole = encodeURIComponent(role);
+    const encodedQuestion = encodeURIComponent(selectedQuestion.question);
+    const encodedSkin = encodeURIComponent(selectedQuestion.skin);
+    location.href = `../../result.html?role=${encodedRole}&question=${encodedQuestion}&skin=${encodedSkin}`;
+  }
+</script>
+
+</body>
+</html>

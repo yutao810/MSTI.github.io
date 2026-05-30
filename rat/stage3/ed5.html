@@ -78,15 +78,15 @@
 
   <div id="q2" class="question hidden">
     <p class="question-title">你的风格是？</p>
-    <button class="option" onclick="location.href='../stage4/7_ZT_JR.html'">选项1：有辅助能力</button>
-    <button class="option" onclick="location.href='../stage4/8_ZT_TF.html'">选项2：独狼</button>
+    <button class="option" onclick="location.href='../stage4/index.html?role=侦探杰瑞'">选项1：有辅助能力</button>
+    <button class="option" onclick="location.href='../stage4/index.html?role=侦探泰菲'">选项2：独狼</button>
   </div>
 </div>
 
 <script>
   function choose1(num) {
     if (num === 2) {
-      location.href = '../stage4/9_EM_TF.html';
+      location.href = '../stage4/index.html?role=恶魔泰菲';
     } else {
       document.getElementById("q1").classList.add("hidden");
       document.getElementById("q2").classList.remove("hidden");
