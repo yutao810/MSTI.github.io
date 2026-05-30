@@ -4,134 +4,194 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>你的测试结果</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+        * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      background-color: #f3f4f6;
-      min-height: 100vh;
-      padding: 1rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    }
+body {
+  background-color: #f3f4f6;
+  min-height: 100vh;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
 
-    .container {
-      max-width: 28rem;
-      width: 100%;
-      background-color: white;
-      border-radius: 1rem;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      overflow: hidden;
-    }
+.container {
+  max-width: 28rem;
+  width: 100%;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
 
-    .header {
-      background: linear-gradient(to right, #2563eb, #9333ea);
-      color: white;
-      padding: 1.5rem;
-      text-align: center;
-    }
+.header {
+  background: linear-gradient(to right, #2563eb, #9333ea);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+}
 
-    .header h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
+.header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
 
-    .header p {
-      font-size: 0.875rem;
-      opacity: 0.9;
-      margin-top: 0.25rem;
-    }
+.header p {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin-top: 0.25rem;
+}
 
-    .image-container {
-      padding: 1.5rem;
-      display: flex;
-      justify-content: center;
-    }
+.image-container {
+  padding: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
 
-    .role-image {
-      width: 16rem;
-      height: 16rem;
-      object-fit: contain;
-      border-radius: 0.75rem;
-      border: 1px solid #e5e7eb;
-    }
+.role-image {
+  width: 16rem;
+  height: 16rem;
+  object-fit: contain;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.role-image:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+}
 
-    .role-info {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-      padding-bottom: 1.5rem;
-      text-align: center;
-    }
+.role-info {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+  text-align: center;
+}
 
-    .role-name {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #1f2937;
-      margin-bottom: 0.25rem;
-    }
+/* 角色名 - 最高优先级 */
+.role-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 0.4rem;
+}
 
-    .role-type {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: #2563eb;
-      margin-bottom: 1rem;
-    }
+/* 角色定位 - 标签样式 */
+.role-type {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 0.8rem;
+  display: inline-block;
+  padding: 0.25rem 0.9rem;
+  background: #eff6ff;
+  border-radius: 999px;
+}
 
-    .role-desc {
-      color: #4b5563;
-      font-size: 1rem;
-      line-height: 1.625;
-    }
+/* 皮肤名称 - 高亮金色 */
+.role-skin {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #d97706;
+  margin-bottom: 0.8rem;
+}
 
-    .button-container {
-      padding: 1.5rem;
-      background-color: #f9fafb;
-      text-align: center;
-    }
+/* 皮肤描述（揭晓文案） */
+.role-question {
+  color: #374151;
+  font-size: 1rem;
+  line-height: 1.6;
+  text-align: center;
+  margin-bottom: 1rem;
+}
 
-    .btn {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
-      background-color: #2563eb;
-      color: white;
-      border-radius: 0.5rem;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.15s ease-in-out;
-    }
+/* 角色描述 - 正文 */
+.role-desc {
+  color: #1f2937;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: justify;
+  text-align-last: center;
+}
 
-    .btn:hover {
-      background-color: #1d4ed8;
-    }
+/* PS 模块 - 无内容自动隐藏 */
+.ps-section {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 3px solid #9ca3af;
+  display: none;
+}
+.ps-section.show {
+  display: block;
+}
 
-    .animate-fade {
-      animation: fade 0.6s ease forwards;
-    }
+.ps-title {
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 0.125rem;
+  font-size: 0.85rem;
+}
 
-    @keyframes fade {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+.ps-content {
+  color: #9ca3af;
+  font-size: 0.85rem;
+}
+
+.button-container {
+  padding: 1.5rem;
+  background-color: #f9fafb;
+  text-align: center;
+  border-top: 1px solid #f3f4f6;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.8rem;
+  background-color: #2563eb;
+  color: white;
+  border-radius: 0.6rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(37,99,235,0.2);
+}
+
+.animate-fade {
+  animation: fade 0.6s ease forwards;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+    </style>
 </head>
 <body>
 
 <div class="container animate-fade">
   <div class="header">
-    <h1>🐭 猫鼠人格测试结果</h1>
+    <h1>猫鼠人格测试结果</h1>
     <p>测试完成！这是属于你的专属角色</p>
   </div>
 
@@ -142,12 +202,18 @@
   <div class="role-info">
     <h2 id="roleName" class="role-name"></h2>
     <p id="roleType" class="role-type"></p>
+    <p id="roleSkin" class="role-skin"></p>
+    <p id="roleQuestion" class="role-question"></p>
+    <div id="psSection" class="ps-section hidden">
+      <div class="ps-title">PS:</div>
+      <div class="ps-content" id="psContent"></div>
+    </div>
     <p id="roleDesc" class="role-desc"></p>
   </div>
 
   <div class="button-container">
     <button onclick="location.href='index.html'" class="btn">
-      🔄 返回首页重新测试
+      返回首页重新测试
     </button>
   </div>
 </div>
@@ -157,307 +223,290 @@
     "尼宝": {
       img: "images/尼宝.avif",
       type: "救援位 · 意识型",
-      desc: "低调的实力派，运筹帷幄之中，决胜千里之外，智者生存的典范"
+      desc: "尼宝是一个爱捣蛋、爱运动的机灵鬼。"
     },
     "剑客泰菲": {
       img: "images/剑客泰菲.avif",
       type: "救援位 · 意识型",
-      desc: "救援型角色的翘楚，推奶酪守火箭有奇效，勇者的胆识体现在刃尖"
+      desc: "剑客泰菲虽然平时惹祸不断，但在学剑之余，他勤加练习掌握了操控盔甲人的技巧。 救援型角色的翘楚，推奶酪守火箭有奇效，勇者的胆识体现在刃尖"
     },
     "国王杰瑞": {
       img: "images/国王杰瑞.avif",
       type: "救援位 · 辅助型",
-      desc: "天生的团队守护者，无敌护盾保护队友，救援能力首屈一指"
+      desc: "国王杰瑞是玩具国的王，他胸怀天下，对自己的子民良善，但对破坏国家安定的野猫毫不留情。"
     },
-    "大表哥": {
-      img: "images/大表哥.avif",
+    "马索尔": {
+      img: "images/马索尔.avif",
       type: "救援位 · 辅助型",
-      desc: "可靠的队友后盾，救援防护一手抓，团队中不可或缺的存在"
+      desc: "黄色黑纹衣服，头戴绿色帽子，和杰瑞长相很相似。他是杰瑞的大表哥，实力强悍，勇敢威猛，是所有猫咪的克星。"
     },
     "剑客莉莉": {
       img: "images/剑客莉莉.avif",
       type: "救援位 · 操作型",
-      desc: "御风剑舞形成结界，幻影剑气可穿梭位移，攻守兼备的女中豪杰"
+      desc: "来自法国第一女剑客莉莉，她的剑招低调不失气势，华丽而不失潇洒，她是坏人们最害怕的敌人。"
     },
     "霜月": {
       img: "images/霜月.avif",
       type: "救援位 · 操作型",
-      desc: "滑步踢与草药精通，减速控制敌人有奇效，战场上的多面手"
+      desc: "外表秀气，内心坚强果敢的霜月是百年来唯一一个通过自己努力进入瑶池，参与仙考的鼠族。自幼和弟弟相依为命的她为了提升自己的修为，曾在幼年时期离开仙界，前往下界独自历练数年，回来的时候已经变成一个法力高强的仙子，身边还多了一个贪吃又可爱的小迷袋——胖呆呆。"
     },
     "侦探杰瑞": {
       img: "images/侦探杰瑞.avif",
       type: "救援位 · 操作型",
-      desc: "冷静睿智擅长运营，主动追踪逃生一流，团队大脑意识流玩家代表"
+      desc: "谨慎机警的侦探杰瑞，来自19世纪末的英国，为了更快地抓到凶手，他极善于隐藏自己的踪迹。"
     },
     "侦探泰菲": {
       img: "images/侦探泰菲.avif",
       type: "奶酪位 · 意识型",
-      desc: "侦探杰瑞的完美搭档，运营辅助样样通，团队多面手不二人选"
+      desc: "侦探泰菲最擅长分析各类疑难问题和数据测算，在日常的探案中，侦探泰菲是侦探杰瑞单击可预览，侦探杰瑞最有力的助手!"
     },
     "恶魔泰菲": {
       img: "images/恶魔泰菲.avif",
       type: "奶酪位 · 意识型",
-      desc: "复制放大物品的魔法师，墙缝期运输奶酪的绝对核心"
+      desc: "迷人又危险的小恶魔泰菲！为了帮助玩具城的国王杰瑞，恶魔泰菲挺身而出，将霸占玩具国的邪恶猫咪团的猫咪们耍得团团转，成功拯救了玩具国的子民们。"
     },
     "杰瑞": {
       img: "images/杰瑞.avif",
       type: "奶酪位 · 均衡型",
-      desc: "经典主角，属性均衡易上手，武器多样辅助强，是新手入门的不二之选"
+      desc: "一只古灵精怪的小老鼠，总喜欢戏弄汤姆，和汤姆是一对欢喜冤家。"
     },
     "梦游杰瑞": {
       img: "images/梦游杰瑞.avif",
       type: "奶酪位 · 操作型",
-      desc: "梦中出击伤害高，自动位移可解控，让猫咪在梦里也追不上"
+      desc: "杰瑞起初并不知道自己为何总是在奇怪的地方醒来。一天，他在梦中打包火腿时惊醒，而眼前是被毛线绑住的可怜汤姆。这时他才意识到自己似乎患上了严重的梦游症。“不要睡着，太危险了……” 梦游杰瑞一边干嚼咖啡豆。一边不断呢喃着，最终……沉沉地睡去。"
     },
     "泰菲": {
       img: "images/泰菲.avif",
       type: "奶酪位 · 操作型",
-      desc: "娇小玲珑难以捕捉，火箭筒爆发伤害高，守火箭推奶酪都很拿手"
+      desc: "可爱的小婴儿泰菲，总是将自己吃得圆滚滚的，他非常依赖叔叔杰瑞，火箭筒是他最爱的玩具。"
     },
     "罗宾汉杰瑞": {
       img: "images/罗宾汉杰瑞.avif",
       type: "奶酪位 · 操作型",
-      desc: "二段跳灵活如风，全图加速BUFF，是奶酪运输路上最靓的快递员"
+      desc: "来自12世纪英国的侠盗罗宾汉，身手敏捷，快迅如风，拥有在空中二段跳的能力。"
     },
     "米可": {
       img: "images/米可.avif",
       type: "牵制位 · 意识型",
-      desc: "神秘角色能力独特，团队配合效果极佳，默默奉献的支援者"
+      desc: "米可是米雪儿的哥哥，出身良好的他立志成为一个优秀的新闻人。以优异成绩毕业后，米可投身新闻事业，总是第一时间出现在新闻现场，向观众提供专业权威的新闻报道。"
     },
     "牛仔杰瑞": {
       img: "images/牛仔杰瑞.avif",
       type: "牵制位 · 意识型",
-      desc: "黔弓道具控制大师，守火箭拦猫咪，助战效果出色样样精通"
+      desc: "牛仔杰瑞拥有很高的音乐天赋，擅长使用吉他鸣奏，热爱自由的他，在草原上过着与世无争的生活。"
     },
     "魔术师": {
       img: "images/魔术师.avif",
       type: "牵制位 · 意识型",
-      desc: "神奇的魔法技能，控制与干扰并存，战场上的变戏法大师"
+      desc: "魔术师是杰瑞的表哥之一，他出身高贵，动作优雅，是一位不折不扣的绅士，他拥有强大的魔法能力，能够将猫玩弄于股掌之间。"
     },
     "航海士杰瑞": {
       img: "images/航海士杰瑞.avif",
       type: "牵制位 · 均衡型",
-      desc: "破坏火箭是他的拿手好戏，海上男儿航向哪里，胜利就指向哪里"
+      desc: "公海上向往自由的航海士杰瑞，是最强大的航海家，他浑身充满野性，常年与火炮打交道的他，善于破坏火箭。"
     },
     "佩克斯": {
       img: "images/佩克斯.avif",
       type: "牵制位 · 均衡型",
-      desc: "跳跃能力出众，机动性极强，猫咪难以捕捉的滑溜小老弟"
+      desc: "头戴黑色牛仔帽，穿着亮闪闪高皮靴的佩克斯，踏着精准的乐点，手持玫瑰木吉他，在属于他的舞台上舞动、歌唱、奔跑，让人无限怀念那属于西部的浪漫与自由。"
     },
     "鲍姆": {
       img: "images/鲍姆.avif",
       type: "牵制位 · 均衡型",
-      desc: "自爆狂魔危险与惊喜并存，锤子砸头眩晕随机，战场的变数之王"
-    },
-    "拿破仑鼠": {
-      img: "images/拿破仑鼠.avif",
-      type: "牵制位 · 操作型",
-      desc: "短腿却有大能量，单次控制精准，战场上的小个子大将军"
+      desc: "名为鲍姆的小白鼠，是从实验室出逃的实验鼠之一，身上装有强大的炸药，任何小碰撞或摔倒都有可能引发爆炸。因此，他们大多小心翼翼，生怕引发意外。不过，鲍姆与众不同。他性格捉摸不透，脑中充满跳跃的想法，手里拿着能引发小爆炸的羊角锤，乐于为新生活增添一些乐趣。别觉得他的行为奇怪，那都是他从实验室外的老鼠身上学来的。"
     },
     "蒙金奇": {
       img: "images/蒙金奇.avif",
       type: "牵制位 · 操作型",
-      desc: "军团指挥官率众冲锋，霸体推进击退一切，战场上的急先锋与领袖"
+      desc: "军团指挥官蒙金奇"
     },
     "剑客杰瑞": {
       img: "images/剑客杰瑞.avif",
       type: "牵制位 · 操作型",
-      desc: "暴力输出一刃斩破局，操作上限极高，是能带领队伍逆风翻盘的王牌"
+      desc: "来自法国的剑客杰瑞，是顶级的剑术大师，他常常冲锋陷阵在最前，是所有老鼠敬仰的英雄。"
     },
     "朵朵": {
       img: "images/朵朵.avif",
       type: "牵制位 · 操作型",
-      desc: "可爱迷人的小花仙，技能独特增益多样，特定模式下极为亮眼"
+      desc: "朵朵原本是汤姆制造出来捕捉杰瑞的机器母鼠，但是在和杰瑞的友好相处中，她被杰瑞的善良勇敢热情打动，喜欢上了杰瑞。最终朵朵获得了人工智能，帮助杰瑞打败了汤姆。"
     },
     "朝圣者泰菲": {
       img: "images/朝圣者泰菲.avif",
       type: "牵制位 · 操作型",
-      desc: "虔诚的朝圣者，技能神秘效果独特，带给队友神秘的守护与增益"
+      desc: "特意前来参与感恩节晚宴的小鼠，从朝圣者人偶身上拿走了塑料枪、带上朝圣者帽、在餐桌上嬉戏玩耍，但眼睛却紧盯着那热气腾腾的美味烤鸡。"
     },
     "天使泰菲": {
       img: "images/天使泰菲.avif",
       type: "功能位 · 综合型",
-      desc: "治疗与复活双重守护，团战中队友最坚实的后盾与依靠"
+      desc: "在王位争夺战中，泰菲化身为天使泰菲，用他的善良感动了汤姆，成功救下了国王杰瑞。"
     },
     "罗宾汉泰菲": {
       img: "images/罗宾汉泰菲.avif",
       type: "功能位 · 综合型",
-      desc: "空中精灵二段跳，灵活穿梭战场，奶酪运输的加速器"
+      desc: "来自12世纪英国的侠盗罗宾汉泰菲，他身形灵敏，擅长利用草丛隐蔽自己，是罗宾汉杰瑞的好帮手。"
     },
-    "柠檬杰瑞": {
-      img: "images/柠檬杰瑞.avif",
+    "表演者杰瑞": {
+      img: "images/表演者杰瑞.avif",
       type: "功能位 · 综合型",
-      desc: "酸涩外表下的战斗专家，简单粗暴效率高，新手中的战斗高手"
+      desc: "来自神秘平行时空的另一位杰瑞，曾因意外从西方漂洋过海来到东方戏院，立志成为一名优秀的演员。最终因一段奇妙际遇跟随汤姆和杰瑞来到它们的时空，不断磨砺演技，追寻着艺术梦想。"
     },
     "莱恩": {
       img: "images/莱恩.avif",
       type: "功能位 · 综合型",
-      desc: "新兴角色机制独特，团队配合能力出众，协作中展现真正实力"
+      desc: "来自平面二维空间中的神秘之鼠，诞生于蘸水笔在蓝图上勾勒的几笔线条，获得生命后便决心将自己的灵感挥洒在每个角落。莱恩从画板中一跃而下，属于艺术家的创作从此揭开序幕。"
     },
     "天使杰瑞": {
       img: "images/天使杰瑞.avif",
       type: "辅助位 · 意识型",
-      desc: "队友的守护天使，复活治疗一手抓，蓄力攻击守火箭样样在行"
+      desc: "拥有一颗善良之心的天使，总会在汤姆遇上危险的时候，对他施以援手。"
     },
     "恶魔杰瑞": {
       img: "images/恶魔杰瑞.avif",
       type: "辅助位 · 意识型",
-      desc: "灵活狡滑的逃生专家，无敌效果多样，运奶酪救援面面俱到"
+      desc: "他是来自神秘之地的恶魔杰瑞，拥有不凡的力量。"
     },
     "玛丽": {
       img: "images/玛丽.avif",
       type: "辅助位 · 操作型",
-      desc: "温柔体贴的护盾专家，治疗与护盾兼备，团战生存能力出色"
+      desc: "高贵优雅的贵族成熟女性，头戴星光闪耀的王冠，她的真实身份其实是公主，肩负责任的她有自己的原则和处事方式。"
     },
     "音乐家杰瑞": {
       img: "images/音乐家杰瑞.avif",
       type: "辅助位 · 操作型",
-      desc: "奏响胜利的乐章，队友增益全覆盖，功能性辅助的极致体现"
+      desc: "他是艺术的宠儿，音乐家杰瑞拥有优雅帅气的外表，他精湛的技艺能够指挥乐队演绎世界上最华丽的乐章，那些或舒缓、或激昂的音乐不断撩动观众的心弦，激起人们内心深处的灵魂共鸣。"
     },
     "雪梨": {
       img: "images/雪梨.avif",
       type: "辅助位 · 均衡型",
-      desc: "爱与治愈的化身，回血驱散于一体，团战增益能力出色"
+      desc: "雪梨是温柔可爱的女孩子，她喜欢一切漂亮美好的东西。"
     },
     "米雪儿": {
       img: "images/米雪儿.avif",
       type: "辅助位 · 均衡型",
-      desc: "优雅与实力并存，辅助技能全面，团队配合的润滑剂与核心"
+      desc: "米雪儿和图多盖洛居住在一个富有的家庭中，是一名富有的千金小姐。她喜欢吃甜品，但她不喜欢火炮类的东西，热爱自然的花草树木，尤其喜爱花朵类的装饰品。"
     },
     "仙女鼠": {
       img: "images/仙女鼠.avif",
       type: "辅助位 · 均衡型",
-      desc: "魔镜通神一棒三变，传送技能灵活多变，战局的颠覆者与关键"
+      desc: "仙女鼠来自于神秘的地方，优雅又充满智慧的她，对小老鼠们充满了怜悯。在杰瑞遇到困难的时候，她悄然出现，好像灰姑娘的教母，满足杰瑞的愿望，帮助杰瑞战胜强敌。"
     },
     "拿坡里鼠": {
       img: "images/拿坡里鼠.avif",
       type: "功能位 · 地形型",
-      desc: "意大利浪漫风味，技能多变适应地形，复杂环境中的穿梭专家"
+      desc: "拿坡里鼠来自意大利，他是一只喜爱吃各种意大利美食的小老鼠，他生活在一个热闹的街道上，平时最喜欢打抱不平、帮助弱小，他是汤姆和杰瑞的好朋友。"
     },
-    "斯飞": {
-      img: "images/斯飞.avif",
-      type: "敏捷位 · 速度型",
-      desc: "风一般的女子，速度快如闪电，追击逃跑都是一把好手"
-    },
-    "表演者杰瑞": {
-      img: "images/表演者杰瑞.avif",
-      type: "功能位 · 增益型",
-      desc: "演艺事业达鼠，技能丰富多样，舞台上的绝对主角与焦点"
-    },
-    "马索尔": {
-      img: "images/马索尔.avif",
-      type: "防护位 · 辅助型",
-      desc: "来自远方的旅者，攻防兼备有特色，团队中独特的辅助力量"
-    },
-    "音乐家杰瑞": {
-      img: "images/音乐家杰瑞.avif",
-      type: "辅助位 · 乐团型",
-      desc: "奏响胜利的乐章，队友增益全覆盖，功能性辅助的极致体现"
-    },
+    
     "兔八哥": {
       img: "images/兔八哥.avif",
-      type: "老鼠 · 逗趣型",
-      desc: "童年的好伙伴，大耳朵跑得快，幽默技能让猫咪头疼不已"
+      type: "猫咪 · 逗趣型",
+      desc: "身为一只疯狂又理智的免子，免八哥在每个紧要关头都能凭借自己的勇气和智慧战胜对手，获得胜利。闲暇之余的他，一边啃着造型和口味都堪称完美的胡萝卜，一边到处挖洞为自己寻找满意的小窝。"
     },
     "汤姆": {
       img: "images/汤姆.avif",
       type: "猫咪 · 特攻型",
-      desc: "经典猫主角，发怒冲刺无敌加速，手型枪平底锅，入门必选"
+      desc: "全能男神汤姆，开得了大型演唱会，造得出飞行翅膀，弹琴舞蹈样样精通，除了不会抓老鼠什么都会。"
     },
     "布奇": {
       img: "images/布奇.avif",
       type: "猫咪 · 爆发型",
-      desc: "暴力美学的典范，横冲直撞无视障碍，垃圾盖范围眩晕攻击力顶尖"
+      desc: "流浪猫铁三角中的老大。在街头流浪的黑猫布奇，总是喜欢和汤姆争夺千金母猫“图多盖洛”，最终成功逆袭为亿万富豪。"
     },
     "托普斯": {
       img: "images/托普斯.avif",
       type: "猫咪 · 控制型",
-      desc: "双重猫格分裂攻击，泡泡困鼠捕虫网抓鼠，策略型猫咪的代表"
+      desc: "流浪猫铁三角中的一员。托普斯是一只呆萌的小灰猫，喜欢和老鼠交朋友，他智商很高，经常捣鼓出一些令人意想不到的发明。"
     },
     "莱特宁": {
       img: "images/莱特宁.avif",
       type: "猫咪 · 刺客型",
-      desc: "闪电瞬移天下武功唯快不破，垃圾桶减速致命，标记鼠无处逃逸"
+      desc: "流浪猫铁三角中的一员。莱特宁是一只橙红色的猫，喜欢与汤姆争夺女主人的宠爱，他移动速度快如闪电，没有任何老鼠能逃脱他的追击。"
     },
     "牛仔汤姆": {
       img: "images/牛仔汤姆.avif",
       type: "猫咪 · 持续输出型",
-      desc: "斗牛冲撞一网打尽，小皮鞭叠加眩晕，越战越勇的西部牛仔"
+      desc: "牛仔汤姆身手敏捷、深藏不露，擅长使用绳索御牛，热爱自由的他，在草原上过着与世无争的生活。"
     },
     "图多盖洛": {
       img: "images/图多盖洛.avif",
       type: "猫咪 · 持续干扰型",
-      desc: "魅惑之吻永久削弱全属性，香水喷雾让鼠逃无可逃，颜值即正义"
+      desc: "拥有惊人美貌的图多盖洛是上东区知名度最高的千金小姐，她的追求者从纽约排到了巴黎"
     },
     "侍卫汤姆": {
       img: "images/侍卫汤姆.avif",
       type: "猫咪 · 刺客型",
-      desc: "隐身护盾的克星，火炮破盾追踪标记，被锁定就等于死亡宣判"
+      desc: "侍卫汤姆始终守护在皇宫内，负责保护国王的安全。"
     },
     "图茨": {
       img: "images/图茨.avif",
       type: "猫咪 · 爆发型",
-      desc: "外表萌妹内心狂暴，高音攻击配合防狼锤，刺客潜质的爆发输出"
+      desc: "图茨拥有娇小的身材和靓丽的脸庞，因为被富养，她性格可爱温柔，广受所有猫和老鼠的喜爱。"
     },
     "塔拉": {
       img: "images/塔拉.avif",
       type: "猫咪 · 追击型",
-      desc: "西部玫瑰以智驭敌，魅力与实力并存，对男性角色有额外优势"
+      desc: "塔拉是西部最美丽的牛仔母猫，她拥有俏丽的脸庞和苗条的身姿，吸引了无数人的目光。"
     },
-    "毛毛发": {
-      img: "images/毛毛发.avif",
+    "斯飞": {
+      img: "images/斯飞.avif",
       type: "猫咪 · 敏捷型",
-      desc: "机灵可爱的化身，身法灵活技能独特，追捕效率超乎想象"
+      desc: "因为与众不同的花色，斯飞在其他猫的眼里是个十足的怪猫。习惯独来独往的他从不和其他猫交流，独自一人住在城市的最中心，充满了神秘感。夜深人静的时候，他总会拿着一个挂坠，似乎在思念着谁。"
     },
     "恶魔汤姆": {
       img: "images/恶魔汤姆.avif",
       type: "猫咪 · 黑暗型",
-      desc: "来自地狱的使者，技能凶猛伤害爆炸，黑暗力量的主宰与噩梦"
+      desc: "恶魔汤姆驾驶着列车从深渊呼啸而来。他通体火红，脑袋上有一对略显狡黠的小触角，手持三叉戟的他一直鼓动着汤姆在老鼠面前找回场子。狡黠的恶魔汤姆身边还有一群忠诚的仆从，他们会不遗余力地完成主人的任何指令。"
     },
     "天使汤姆": {
       img: "images/天使汤姆.avif",
       type: "猫咪 · 防御型",
-      desc: "万有引力吸道具环身，被攻有盾抵挡伤害，攻守兼备的圣者"
+      desc: "天使汤姆乘坐库博的天国火车，从神秘的天堂中而来。身穿纯白色长袍，头戴天使光环的他认为猫和老鼠都应该有快乐的空间，温柔善良的他脸上始终带着一抹浅浅的微笑，手持小竖琴时不时传来悠扬的乐声，让猫猫鼠鼠们忍不住靠近。"
     },
     "剑客汤姆": {
       img: "images/剑客汤姆.avif",
       type: "猫咪 · 剑术型",
-      desc: "剑术精湛出剑如电，攻击范围大伤害高，鼠见鼠怕的剑道大师"
+      desc: "拥有超群剑术的大师剑客汤姆，是法国万千少女心中的偶像。"
     },
     "追风汤姆": {
       img: "images/追风汤姆.avif",
       type: "猫咪 · 飞行型",
-      desc: "战术机动空中飞舞，俯冲击晕敌害，掌控天空的追风者"
+      desc: "因为一场神秘的实验意外而降落于猫鼠五周年特别纪念展的不速之客，天生充满了对蓝天的向往，热爱钻研新奇的发明，脑袋里充满稀奇古怪的创意，立志成为猫咪界第一位飞行员，在汤姆和杰瑞的陪伴下被纪念展的内容所打动，来到这里继续进行新的创意发明。"
     },
     "凯特": {
       img: "images/凯特.avif",
       type: "猫咪 · 攻击型",
-      desc: "学霸气质伤害成长高，被动增伤又加速，攻防两端都很优秀"
+      desc: "她是博学多才的都市美少女，冷静知性，是智慧与美貌并存的化身。她是校园中靓丽的风景线，也是学生眼中博学多识的师长。拥有无限魅力她，其爱慕者多如过江之鲫。"
     },
     "苏蕊": {
       img: "images/苏蕊.avif",
       type: "猫咪 · 干扰型",
-      desc: "啦啦队长活力四射，律动时间回血免控，输出与生存兼备"
+      desc: "苏蕊是最受欢迎的啦啦队队长，充满活力的她，脸上时时刻刻都洋溢着灿烂的笑容。她热爱生活，享受美食，认识她的猫和老鼠都会被她吸引，和她成为朋友。"
     },
     "米特": {
       img: "images/米特.avif",
       type: "猫咪 · 陷阱型",
-      desc: "疯狂锤子砸晕一切，陷阱设置封锁走位，隐身绕后一击必中"
+      desc: "米特是一只流浪猫，他的尾巴曾在一场流浪猫战争中受过伤，但他十分勇猛，从来不会向敌人认输。"
     },
     "库博": {
       img: "images/库博.avif",
       type: "猫咪 · 隐身型",
-      desc: "虚幻梦影来去如风，隐身追杀防不胜防，老鼠最怕的潜行刺客"
+      desc: "天空列车站的站长，拥有能够看穿他人内心的力量。他博学多才，善于思考，同时也是知识的化身。"
     },
     "如玉": {
       img: "images/如玉.avif",
       type: "猫咪 · 特殊型",
-      desc: "气质高雅与众不同，技能效果别具一格，猫中君子的完美诠释"
+      desc: "畅音阁的当家旦角如玉，身段灵动优雅，唱腔娴熟婉转，在多年苦练后，终于如愿在戏台上展现自己的风姿。作为一只猫，优秀的柔韧性，使得如玉的青旦角色身姿优雅，更将水袖与扇子舞动的如天外来仙。极佳的弹跳能力，更是帮助她的刀马旦角色在戏台上下翻飞，如同一位除暴安良的侠女。怀揣着心中的正义与对金城的眷恋，如玉手中常持一杆花枪。尽管没有法力，可她依旧尝试保卫自己的家园，守护金城的和平和安定。"
     }
   };
 
   const params = new URLSearchParams(location.search);
   const roleName = params.get("role") || "未知角色";
+  const question = params.get("question") || "";
+  const skin = params.get("skin") || "";
+  
+  const psData = {
+    "江南采莲，莲叶何田田，鱼戏莲叶间": "江南水乡的美景总是让人沉醉，这款皮肤完美展现了鱼戏莲叶的意境。"
+  };
+  
   const data = roleData[roleName] || {
     img: "images/default.avif",
     type: "未知定位",
@@ -468,6 +517,20 @@
   document.getElementById("roleType").innerText = data.type;
   document.getElementById("roleDesc").innerText = data.desc;
   document.getElementById("roleImg").src = data.img;
+  
+  if (skin) {
+    document.getElementById("roleSkin").innerText = skin;
+  }
+  
+  if (question) {
+    document.getElementById("roleQuestion").innerText = question;
+  }
+  
+  const psContent = psData[question];
+  if (psContent) {
+    document.getElementById("psSection").classList.remove("hidden");
+    document.getElementById("psContent").innerText = psContent;
+  }
 </script>
 
 </body>
