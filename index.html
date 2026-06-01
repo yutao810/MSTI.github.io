@@ -3,18 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>猫鼠人格测试</title>
+  <title>猫和老鼠手游游戏风格测试</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-6 text-center">
   <div class="max-w-xl w-full bg-white p-10 rounded-2xl shadow-sm border border-gray-100">
     <h1 class="text-4xl font-bold text-gray-900 mb-4 tracking-tight">
-      猫鼠人格测试
+      猫和老鼠手游游戏风格测试
     </h1>
     
     <p class="text-lg text-gray-600 mb-8">
-      测一测你更像猫，还是更像鼠？
+      来测一测你的游戏风格像哪个角色吧
     </p>
+
+    <button onclick="showAnnouncement()" class="mb-6 px-4 py-2 text-sm text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-lg transition">
+      📢 更新公告
+    </button>
 
     <div class="text-left text-gray-600 mb-10 bg-gray-50 p-6 rounded-xl text-sm leading-relaxed">
       <p class="font-semibold mb-3 text-gray-800">测试说明：</p>
@@ -28,10 +32,47 @@
     <!-- 两个按钮：猫问卷 + 鼠问卷 -->
     <div class="flex flex-col sm:flex-row gap-4">
       <button onclick="goCat()" class="flex-1 px-8 py-3 font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
-        🐱 猫问卷
+        猫问卷
       </button>
       <button onclick="goRat()" class="flex-1 px-8 py-3 font-medium text-white bg-gray-800 rounded-lg hover:bg-gray-900 transition">
-        🐭 鼠问卷
+        鼠问卷
+      </button>
+    </div>
+
+    <!-- 支持信息 -->
+    <p class="mt-6 text-sm text-gray-500 leading-relaxed">
+      关注<a href="https://space.bilibili.com/382840978?spm_id_from=333.1007.0.0" target="_blank" class="text-blue-500 hover:text-blue-600 underline">b站LXK郁桃</a>谢谢喵，关注<a href="https://space.bilibili.com/382840978?spm_id_from=333.1007.0.0" target="_blank" class="text-blue-500 hover:text-blue-600 underline">b站LXK郁桃</a>谢谢喵<br>
+      如果你觉得这个项目还不错，可以前往<a href="https://www.afdian.com/a/taonanzhuang" target="_blank" class="text-blue-500 hover:text-blue-600 underline">爱发电支持</a>LXK郁桃，一切收益都会用于下一个项目的制作😘<br>
+      QQ交流群：155058417
+    </p>
+  </div>
+
+  <!-- 公告弹窗 -->
+  <div id="announcementModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-xl max-w-md w-full mx-4 p-6">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-lg font-semibold text-gray-900">📢 更新公告</h3>
+        <button onclick="closeAnnouncement()" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">&times;</button>
+      </div>
+      <div class="text-gray-600 text-sm space-y-2 max-h-80 overflow-y-auto">
+        <p><strong>v0.4更新公告</strong></p>
+        <ul class="list-disc list-inside space-y-1 pl-2">
+          <li>新增了一个未完成跳转页面</li>
+        </ul>
+        <p><strong>v0.3更新公告</strong></p>
+        <ul class="list-disc list-inside space-y-1 pl-2">
+          <li>鼠方试卷选项已上线</li>
+          <li>移除了侦探泰菲的分支定位奶酪-综合</li>
+        </ul>
+        <p><strong>v0.2更新公告</strong></p>
+        <ul class="list-disc list-inside space-y-1 pl-2">
+          <li>新增猫问卷</li>
+          <li>音乐家立绘问题已修复</li>
+          <li>ed1-3的访问问题已修复</li>
+        </ul>
+      </div>
+      <button onclick="closeAnnouncement()" class="mt-4 w-full py-2 bg-gray-100 hover:bg-gray-200 rounded-lg text-gray-700 transition">
+        关闭
       </button>
     </div>
   </div>
@@ -45,6 +86,16 @@
     // 鼠问卷跳转
     function goRat() {
       window.location.href = "rat/rat.html";
+    }
+
+    // 显示公告弹窗
+    function showAnnouncement() {
+      document.getElementById('announcementModal').classList.remove('hidden');
+    }
+
+    // 关闭公告弹窗
+    function closeAnnouncement() {
+      document.getElementById('announcementModal').classList.add('hidden');
     }
   </script>
 </body>
