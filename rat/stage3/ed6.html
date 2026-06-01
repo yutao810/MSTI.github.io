@@ -71,30 +71,14 @@
   <h1>🐭 最终角色确认</h1>
 
   <div id="q1" class="question">
-    <p class="question-title">你玩游戏更偏向？</p>
-    <button class="option" onclick="goResult('梦游杰瑞')">选项1：推得快</button>
-    <button class="option" onclick="choose1(2)">选项2：能博弈</button>
-  </div>
-
-  <div id="q2" class="question hidden">
-    <p class="question-title">你更喜欢哪种风格？</p>
-    <button class="option" onclick="location.href='../stage4/index.html?role=泰菲'">选项1：硬进流</button>
-    <button class="option" onclick="location.href='../stage4/index.html?role=罗宾汉杰瑞'">选项2：自卫流</button>
+    <p class="question-title">你在选择牵制位的时候更喜欢哪种风格？</p>
+    <button class="option" onclick="location.href='../stage4/index.html?role=米可'">选项1：能直接了当的打出伤害的角色</button>
+    <button class="option" onclick="location.href='../stage4/index.html?role=牛仔杰瑞'">选项2：伤害不高，但是能持续触发，且有脱手技能的角色</button>
+    <button class="option" onclick="location.href='../stage4/index.html?role=魔术师'">选项3：能给猫方上不同的负面效果的角色</button>
   </div>
 </div>
 
-<script>
-  function choose1(num) {
-    if (num === 2) {
-      document.getElementById("q1").classList.add("hidden");
-      document.getElementById("q2").classList.remove("hidden");
-    }
-  }
 
-  function goResult(role) {
-    location.href = `../stage4/index.html?role=${role}`;
-  }
-</script>
 
 </body>
 </html>
